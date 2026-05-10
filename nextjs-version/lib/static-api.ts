@@ -379,6 +379,65 @@ courses.forEach((course) => {
   );
 });
 
+const courseReviews = [
+  {
+    id: 1,
+    rating: 5,
+    comment:
+      "The course detail page, learning player, and dashboard flow feel complete and easy to follow.",
+    isPublished: true,
+    user: users[0],
+    course: courses[0],
+    createdAt: now,
+    updatedAt: now,
+  },
+  {
+    id: 2,
+    rating: 4,
+    comment:
+      "Good static demo data for checking reviews, course tabs, and learner interactions.",
+    isPublished: true,
+    user: users[1],
+    course: courses[0],
+    createdAt: now,
+    updatedAt: now,
+  },
+];
+
+const courseReviewSummary = {
+  average: 4.5,
+  total: courseReviews.length,
+  breakdown: [5, 4, 3, 2, 1].map((rating) => ({
+    rating,
+    count: courseReviews.filter((review) => review.rating === rating).length,
+  })),
+};
+
+const courseQuestions = [
+  {
+    id: 1,
+    title: "Can I customize the static course content?",
+    body: "Where should I update the course, lessons, reviews, and exam demo data?",
+    isResolved: true,
+    isPublished: true,
+    user: users[1],
+    course: courses[0],
+    answers: [
+      {
+        id: 1,
+        body: "Yes. Update the objects in lib/static-api.ts. The adapter mirrors the original API response shapes.",
+        isAccepted: true,
+        isPublished: true,
+        user: users[0],
+        createdAt: now,
+        updatedAt: now,
+      },
+    ],
+    createdAt: now,
+    updatedAt: now,
+  },
+];
+
 const articles: any[] = [
   {
     id: 1,
@@ -601,9 +660,24 @@ const certificates = [
     id: 1,
     certificateNumber: "KASA-2026-001",
     issuedAt: now,
+    file: file(91, "Certificate", "/assets/default-cover.jpg"),
+    user: users[0],
     course: { id: 3, title: courses[2].title, slug: courses[2].slug },
+    createdAt: now,
+    updatedAt: now,
   },
 ];
+
+const courseCertificate = {
+  id: 2,
+  certificateNumber: "KASA-2026-002",
+  issuedAt: now,
+  file: file(92, "Course Certificate", "/assets/default-cover.jpg"),
+  user: users[0],
+  course: { id: courses[0].id, title: courses[0].title, slug: courses[0].slug },
+  createdAt: now,
+  updatedAt: now,
+};
 
 const examHistory = [
   {
@@ -632,6 +706,108 @@ const exams = [
     updatedAt: now,
   },
 ];
+
+const learnerExamQuestions = [
+  {
+    id: 1,
+    title: "Static data flow",
+    prompt: "Where does this theme read demo data from?",
+    type: "mcq_single",
+    points: 5,
+    allowPartialMarking: false,
+    options: [
+      { id: "a", text: "lib/static-api.ts", isCorrect: true },
+      { id: "b", text: "A remote database", isCorrect: false },
+      { id: "c", text: "Docker compose", isCorrect: false },
+    ],
+    matchingPairs: [],
+    explanation: "The static adapter provides local API-shaped responses.",
+  },
+  {
+    id: 2,
+    title: "Course page sections",
+    prompt: "Which sections are included in the course detail page?",
+    type: "mcq_multiple",
+    points: 5,
+    allowPartialMarking: true,
+    options: [
+      { id: "a", text: "Overview and curriculum", isCorrect: true },
+      { id: "b", text: "Instructor and reviews", isCorrect: true },
+      { id: "c", text: "Only a single hero banner", isCorrect: false },
+    ],
+    matchingPairs: [],
+    explanation: "The course page keeps all original tabs and rich sections.",
+  },
+];
+
+const learnerSubmittedAttempt = {
+  id: 1,
+  status: "submitted",
+  startedAt: now,
+  expiresAt: null,
+  submittedAt: now,
+  score: 10,
+  maxScore: 10,
+  percentage: 100,
+  passed: true,
+  needsManualGrading: false,
+  questions: learnerExamQuestions,
+  answers: [
+    { questionId: 1, answer: "a" },
+    { questionId: 2, answer: ["a", "b"] },
+  ],
+  questionResults: [
+    { questionId: 1, score: 5, maxScore: 5, isCorrect: true },
+    { questionId: 2, score: 5, maxScore: 5, isCorrect: true },
+  ],
+};
+
+const learnerActiveAttempt = {
+  ...learnerSubmittedAttempt,
+  id: 2,
+  status: "in_progress",
+  submittedAt: null,
+  score: 0,
+  maxScore: 10,
+  percentage: 0,
+  passed: false,
+  answers: [],
+  questionResults: [],
+  expiresAt: "2026-05-10T12:00:00.000Z",
+};
+
+const learnerExamPayload = {
+  exam: {
+    id: 1,
+    title: "Next.js Theme Final Assessment",
+    description:
+      "A short static exam to demonstrate the learner exam workspace.",
+    instructions:
+      "Answer each question and submit to see the result state, certificate prompt, and review screen.",
+    passingPercentage: 70,
+    durationMinutes: 30,
+    attemptLimit: 3,
+    randomizeQuestions: false,
+    shuffleOptions: false,
+    fullscreenRequired: false,
+    serverTimerEnabled: true,
+    autoSubmitEnabled: true,
+    perQuestionFeedbackEnabled: true,
+    overallFeedback: "Great work. You understand how the static theme is wired.",
+    correctAnswerVisibility: "after_submit",
+  },
+  activeAttempt: null,
+  attempts: [learnerSubmittedAttempt],
+  attemptsUsed: 1,
+  extraAttempts: 0,
+  effectiveAttemptLimit: 3,
+  attemptsRemaining: 2,
+  canAttempt: true,
+  isPassed: true,
+  isUnlocked: true,
+  unlockProgress: 100,
+  unlockMessage: "Final exam is unlocked.",
+};
 
 const classSessions = [
   {
@@ -691,6 +867,21 @@ export async function staticApiRequest<T>(
         currency: orders[0].currency,
         courses: courses.map(({ id, slug, title }) => ({ id, slug, title })),
       }) as T;
+    }
+    if (path.startsWith("/exams/course/") && path.endsWith("/attempts/start")) {
+      return ok(learnerActiveAttempt) as T;
+    }
+    if (path.startsWith("/exams/attempts/") && path.endsWith("/submit")) {
+      return ok(learnerSubmittedAttempt) as T;
+    }
+    if (path.startsWith("/certificates/course/") && path.endsWith("/generate")) {
+      return ok(courseCertificate) as T;
+    }
+    if (path.includes("/course-reviews/")) {
+      return ok({ ...courseReviews[0], ...(body as object) }) as T;
+    }
+    if (path.includes("/course-qa/")) {
+      return ok(courseQuestions[0]) as T;
     }
     return ok(body || { success: true, message: "Static theme action" }) as T;
   }
@@ -821,6 +1012,7 @@ export async function staticApiRequest<T>(
 
   if (path === "/cart") return ok({ items: courses.slice(0, 1), total: 79 }) as T;
   if (path === "/certificates/my") return ok(certificates) as T;
+  if (path.startsWith("/certificates/course/")) return ok(courseCertificate) as T;
   if (path === "/certificates/admin/dashboard") {
     return ok({ totalIssued: certificates.length, certificates }) as T;
   }
@@ -859,6 +1051,9 @@ export async function staticApiRequest<T>(
   }
   if (path.includes("access-overrides")) return ok([]) as T;
 
+  if (path.startsWith("/exams/course/") && path.endsWith("/learner")) {
+    return ok(learnerExamPayload) as T;
+  }
   if (path === "/exams") return ok(paginated(exams)) as T;
   if (path === "/exams/question-bank/categories") return ok(paginated([{ id: 1, name: "General", description: "Static category", createdAt: now, updatedAt: now }])) as T;
   if (path === "/exams/question-bank/questions") return ok(paginated([{ id: 1, prompt: "What is a static theme?", type: "single", points: 5, options: [], createdAt: now, updatedAt: now }])) as T;
@@ -953,6 +1148,21 @@ export async function staticApiRequest<T>(
   if (path === "/notifications/my") return ok(notifications) as T;
   if (path === "/notifications/my/unread-count") return ok({ count: 1 }) as T;
   if (path === "/notifications/push/public-key") return ok({ isEnabled: false, publicKey: "" }) as T;
+
+  if (path.startsWith("/course-reviews/course/") && path.endsWith("/summary")) {
+    return ok(courseReviewSummary) as T;
+  }
+  if (path.startsWith("/course-reviews/course/") && path.endsWith("/mine")) {
+    return ok(courseReviews[0]) as T;
+  }
+  if (path.startsWith("/course-reviews/course/")) return ok(courseReviews) as T;
+  if (path === "/course-reviews") return ok(courseReviews) as T;
+
+  if (path.startsWith("/course-qa/course/")) return ok(courseQuestions) as T;
+  if (path === "/course-qa/questions") return ok(courseQuestions) as T;
+  if (path === "/course-qa/answers") {
+    return ok(courseQuestions.flatMap((question) => question.answers)) as T;
+  }
 
   if (path === "/roles-permissions") return ok(roles) as T;
   if (path === "/roles-permissions/permissions") return ok(permissions) as T;
