@@ -2,7 +2,24 @@ export const navbarItems = [
   {
     label: "Home",
     href: "/",
-    hasChild: false,
+    hasChild: true,
+    featured: {
+      title: "Homepage Variations",
+      description: "Preview multiple landing directions for the same static LMS content.",
+      href: "/",
+    },
+    groups: [
+      {
+        label: "Home Demos",
+        items: [
+          { label: "Default Home", href: "/", description: "Animated academy hero with course slider", image: "/assets/demo/course-nextjs.svg" },
+          { label: "Classic Academy", href: "/home-2", description: "Trust-first academy layout", image: "/assets/demo/course-ui.svg" },
+          { label: "Live Cohort", href: "/home-3", description: "Mentor and batch focused hero", image: "/assets/demo/course-react-live.svg" },
+          { label: "Marketplace", href: "/home-4", description: "Catalog-first storefront", image: "/assets/demo/course-data-ai.svg" },
+          { label: "LMS Platform", href: "/home-5", description: "Dashboard and product-led story", image: "/assets/demo/course-devops.svg" },
+        ],
+      },
+    ],
   },
   {
     label: "Courses",
