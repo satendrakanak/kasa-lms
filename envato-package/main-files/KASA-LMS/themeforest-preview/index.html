@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kasa LMS ThemeForest Preview</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #101828;
+        background: #f5f7fb;
+      }
+      .hero {
+        min-height: 760px;
+        padding: 64px 56px 32px;
+        color: #fff;
+        background:
+          radial-gradient(circle at 78% 22%, rgba(51, 102, 255, .52), transparent 34%),
+          radial-gradient(circle at 22% 18%, rgba(255, 45, 85, .32), transparent 28%),
+          linear-gradient(135deg, #08111f 0%, #10243d 48%, #08111f 100%);
+        overflow: hidden;
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, .9fr) minmax(560px, 1.25fr);
+        gap: 48px;
+        align-items: center;
+        max-width: 1440px;
+        margin: 0 auto;
+      }
+      .eyebrow {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        padding: 10px 14px;
+        border: 1px solid rgba(255,255,255,.16);
+        border-radius: 999px;
+        background: rgba(255,255,255,.08);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 28px 0 18px;
+        max-width: 760px;
+        font-size: clamp(56px, 7vw, 112px);
+        line-height: .92;
+        letter-spacing: 0;
+      }
+      .hero p {
+        max-width: 720px;
+        color: rgba(255,255,255,.74);
+        font-size: 22px;
+        line-height: 1.55;
+      }
+      .actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
+      .pill {
+        padding: 15px 20px;
+        border-radius: 999px;
+        border: 1px solid rgba(255,255,255,.18);
+        background: rgba(255,255,255,.1);
+        color: #fff;
+        font-weight: 800;
+      }
+      .pill.primary { background: #fff; color: #0b1424; }
+      .hero-stack {
+        position: relative;
+        min-height: 620px;
+      }
+      .hero-shot {
+        position: absolute;
+        width: 88%;
+        border-radius: 28px;
+        box-shadow: 0 34px 100px rgba(0,0,0,.42);
+        border: 1px solid rgba(255,255,255,.14);
+        overflow: hidden;
+        background: #fff;
+      }
+      .hero-shot img { display: block; width: 100%; }
+      .hero-shot.one { right: 0; top: 0; }
+      .hero-shot.two { left: 0; top: 270px; width: 62%; }
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        max-width: 1440px;
+        margin: 40px auto 0;
+      }
+      .metric {
+        border: 1px solid rgba(255,255,255,.14);
+        border-radius: 20px;
+        background: rgba(255,255,255,.08);
+        padding: 22px;
+      }
+      .metric strong { display: block; font-size: 32px; }
+      .metric span { display: block; margin-top: 5px; color: rgba(255,255,255,.66); }
+      section { max-width: 1440px; margin: 0 auto; padding: 72px 56px; }
+      .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 28px; }
+      h2 { margin: 0; font-size: 44px; line-height: 1.05; letter-spacing: 0; }
+      .section-head p { margin: 0; max-width: 560px; color: #667085; font-size: 18px; line-height: 1.6; }
+      .screen-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+      .screen-card {
+        overflow: hidden;
+        border-radius: 24px;
+        background: #fff;
+        border: 1px solid #e5e7ef;
+        box-shadow: 0 18px 55px rgba(16,24,40,.08);
+      }
+      .screen-card img { display: block; width: 100%; height: 300px; object-fit: cover; object-position: top; background: #eef2f7; }
+      .screen-card div { padding: 18px; }
+      .screen-card span { color: #3157f6; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .14em; }
+      .screen-card h3 { margin: 8px 0 0; font-size: 20px; }
+      .dark-band {
+        max-width: none;
+        background: #08111f;
+        color: #fff;
+      }
+      .dark-band .inner { max-width: 1440px; margin: 0 auto; padding: 72px 56px; }
+      .dark-band .section-head p { color: rgba(255,255,255,.68); }
+      .dark-band .screen-card { background: #121d2d; border-color: rgba(255,255,255,.12); }
+      .dark-band .screen-card h3 { color: #fff; }
+      .features {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .feature {
+        padding: 18px;
+        border-radius: 18px;
+        background: #fff;
+        border: 1px solid #e5e7ef;
+        font-weight: 750;
+        line-height: 1.45;
+      }
+      .mobile-row {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .mobile-row .screen-card img { height: 520px; }
+      .footer {
+        padding: 44px 56px 64px;
+        text-align: center;
+        color: #667085;
+      }
+      @media (max-width: 900px) {
+        .hero { padding: 42px 18px; min-height: auto; }
+        .hero-grid, .metrics, .screen-grid, .features, .mobile-row {
+          grid-template-columns: 1fr;
+        }
+        .hero-stack { min-height: 420px; }
+        .hero-shot { position: static; width: 100% !important; margin-top: 18px; }
+        section, .dark-band .inner { padding: 48px 18px; }
+        .section-head { display: block; }
+        h1 { font-size: 54px; }
+        h2 { font-size: 34px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">Kasa LMS Theme</div>
+            <h1>Complete static LMS template for Next.js</h1>
+            <p>Course marketplace, learner dashboard, faculty workspace, admin screens, checkout, certificates, content pages, component demos, and polished light/dark mode previews.</p>
+            <div class="actions">
+              <span class="pill primary">Next.js Version</span>
+              <span class="pill">HTML/CSS Ready Structure</span>
+              <span class="pill">Static Data Included</span>
+            </div>
+          </div>
+          <div class="hero-stack">
+            <div class="hero-shot one"><img src="screenshots/home-light-desktop.png" alt="Kasa LMS homepage preview" /></div>
+            <div class="hero-shot two"><img src="screenshots/admin-dark-desktop.png" alt="Kasa LMS admin dark preview" /></div>
+          </div>
+        </div>
+        <div class="metrics">
+          <div class="metric"><strong>5</strong><span>Homepage demos</span></div>
+          <div class="metric"><strong>60+</strong><span>Polished pages</span></div>
+          <div class="metric"><strong>2</strong><span>Light and dark modes</span></div>
+          <div class="metric"><strong>0</strong><span>Backend setup required</span></div>
+        </div>
+      </header>
+      <section>
+        <div class="section-head">
+          <h2>Desktop light previews</h2>
+          <p>Public pages, commerce flow, dashboards, content screens, and component pages are ready for buyers to inspect.</p>
+        </div>
+        <div class="screen-grid">
+    <article class="screen-card">
+      <img src="screenshots/home-light-desktop.png" alt="Default Home light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>Default Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-classic-light-desktop.png" alt="Classic Academy Home light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>Classic Academy Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-live-light-desktop.png" alt="Live Cohort Home light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>Live Cohort Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-marketplace-light-desktop.png" alt="Course Marketplace Home light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>Course Marketplace Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-platform-light-desktop.png" alt="LMS Platform Home light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>LMS Platform Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/courses-grid-light-desktop.png" alt="Courses Grid light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>Courses Grid</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/course-detail-light-desktop.png" alt="Course Detail light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>Course Detail</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/articles-light-desktop.png" alt="Articles light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>Articles</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/faculty-light-desktop.png" alt="Faculty Directory light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>Faculty Directory</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/components-light-desktop.png" alt="Components Hub light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>Components Hub</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/dashboard-light-desktop.png" alt="Learner Dashboard light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>Learner Dashboard</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/admin-light-desktop.png" alt="Admin Dashboard light desktop preview" />
+      <div>
+        <span>light / desktop</span>
+        <h3>Admin Dashboard</h3>
+      </div>
+    </article></div>
+      </section>
+      <div class="dark-band">
+        <div class="inner">
+          <div class="section-head">
+            <h2>Dark mode included</h2>
+            <p>The theme supports dark mode across homepage demos, learner experiences, admin screens, and conversion pages.</p>
+          </div>
+          <div class="screen-grid">
+    <article class="screen-card">
+      <img src="screenshots/home-dark-desktop.png" alt="Default Home dark desktop preview" />
+      <div>
+        <span>dark / desktop</span>
+        <h3>Default Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-classic-dark-desktop.png" alt="Classic Academy Home dark desktop preview" />
+      <div>
+        <span>dark / desktop</span>
+        <h3>Classic Academy Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-live-dark-desktop.png" alt="Live Cohort Home dark desktop preview" />
+      <div>
+        <span>dark / desktop</span>
+        <h3>Live Cohort Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-marketplace-dark-desktop.png" alt="Course Marketplace Home dark desktop preview" />
+      <div>
+        <span>dark / desktop</span>
+        <h3>Course Marketplace Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-platform-dark-desktop.png" alt="LMS Platform Home dark desktop preview" />
+      <div>
+        <span>dark / desktop</span>
+        <h3>LMS Platform Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/courses-grid-dark-desktop.png" alt="Courses Grid dark desktop preview" />
+      <div>
+        <span>dark / desktop</span>
+        <h3>Courses Grid</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/course-detail-dark-desktop.png" alt="Course Detail dark desktop preview" />
+      <div>
+        <span>dark / desktop</span>
+        <h3>Course Detail</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/articles-dark-desktop.png" alt="Articles dark desktop preview" />
+      <div>
+        <span>dark / desktop</span>
+        <h3>Articles</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/faculty-dark-desktop.png" alt="Faculty Directory dark desktop preview" />
+      <div>
+        <span>dark / desktop</span>
+        <h3>Faculty Directory</h3>
+      </div>
+    </article></div>
+        </div>
+      </div>
+      <section>
+        <div class="section-head">
+          <h2>Mobile previews</h2>
+          <p>Responsive layouts are captured for the key buying journey, from homepage to course detail and dashboards.</p>
+        </div>
+        <div class="mobile-row">
+    <article class="screen-card">
+      <img src="screenshots/home-light-mobile.png" alt="Default Home light mobile preview" />
+      <div>
+        <span>light / mobile</span>
+        <h3>Default Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-classic-light-mobile.png" alt="Classic Academy Home light mobile preview" />
+      <div>
+        <span>light / mobile</span>
+        <h3>Classic Academy Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-live-light-mobile.png" alt="Live Cohort Home light mobile preview" />
+      <div>
+        <span>light / mobile</span>
+        <h3>Live Cohort Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-marketplace-light-mobile.png" alt="Course Marketplace Home light mobile preview" />
+      <div>
+        <span>light / mobile</span>
+        <h3>Course Marketplace Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/home-platform-light-mobile.png" alt="LMS Platform Home light mobile preview" />
+      <div>
+        <span>light / mobile</span>
+        <h3>LMS Platform Home</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/courses-grid-light-mobile.png" alt="Courses Grid light mobile preview" />
+      <div>
+        <span>light / mobile</span>
+        <h3>Courses Grid</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/course-detail-light-mobile.png" alt="Course Detail light mobile preview" />
+      <div>
+        <span>light / mobile</span>
+        <h3>Course Detail</h3>
+      </div>
+    </article>
+    <article class="screen-card">
+      <img src="screenshots/articles-light-mobile.png" alt="Articles light mobile preview" />
+      <div>
+        <span>light / mobile</span>
+        <h3>Articles</h3>
+      </div>
+    </article></div>
+      </section>
+      <section>
+        <div class="section-head">
+          <h2>Feature highlights</h2>
+          <p>Copy-ready feature list for marketplace documentation and item description.</p>
+        </div>
+        <div class="features"><div class="feature">5 homepage demos with different hero systems</div><div class="feature">Static JSON/API adapter, no backend required</div><div class="feature">Course catalog with grid, list, masonry-style layouts</div><div class="feature">Single course pages with cart, checkout, progress, lessons, exams, and certificates</div><div class="feature">Learner dashboard with profile, orders, notifications, settings, classes, and certificates</div><div class="feature">Admin dashboard screens for courses, articles, coupons, categories, users, orders, media, refunds, roles, and settings</div><div class="feature">Faculty dashboard, faculty directory, and faculty profile pages</div><div class="feature">Articles, testimonials, contact, about, and component demo pages</div><div class="feature">Light and dark modes across public, learner, faculty, and admin areas</div><div class="feature">Generated demo portraits and SVG course covers for safer marketplace packaging</div><div class="feature">Responsive layouts for desktop, tablet, and mobile previews</div><div class="feature">Theme-friendly UI components: buttons, inputs, forms, switches, tables, and charts</div></div>
+      </section>
+      <div class="footer">Kasa LMS ThemeForest preview pack • Static demo content • Light/Dark screenshots • Desktop/Mobile presentation</div>
+    </main>
+  </body>
+</html>

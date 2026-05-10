@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KASA LMS Documentation</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Inter, Arial, sans-serif;
+        color: #172033;
+        background: #f6f8fc;
+        line-height: 1.7;
+      }
+      main {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 56px 22px 80px;
+      }
+      section {
+        margin-top: 28px;
+        padding: 28px;
+        border: 1px solid #e4e9f2;
+        border-radius: 18px;
+        background: #fff;
+      }
+      h1 {
+        margin: 0;
+        font-size: 44px;
+        line-height: 1.05;
+      }
+      h2 {
+        margin: 0 0 12px;
+        font-size: 26px;
+      }
+      code,
+      pre {
+        border-radius: 10px;
+        background: #101828;
+        color: #e0f2fe;
+      }
+      code {
+        padding: 2px 7px;
+      }
+      pre {
+        overflow-x: auto;
+        padding: 16px;
+      }
+      .lead {
+        max-width: 780px;
+        color: #536175;
+        font-size: 18px;
+      }
+      a {
+        color: #3157f6;
+      }
+      ul {
+        padding-left: 22px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>KASA LMS Documentation</h1>
+      <p class="lead">
+        KASA LMS is a modern Next.js Learning Management System and Admin Dashboard theme
+        with static demo data, responsive layouts, learner dashboards, faculty dashboards,
+        admin screens, course pages, checkout flow, articles, testimonials, and component demos.
+      </p>
+
+      <section>
+        <h2>Package Contents</h2>
+        <ul>
+          <li><strong>source/nextjs-version</strong> - complete Next.js theme source.</li>
+          <li><strong>documentation</strong> - this setup and customization guide.</li>
+          <li><strong>themeforest-preview</strong> - screenshots, marketplace copy, and preview reference.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Requirements</h2>
+        <ul>
+          <li>Node.js 20 or newer recommended.</li>
+          <li>Bun package manager recommended because the project includes <code>bun.lock</code>.</li>
+          <li>A modern browser for testing light and dark mode.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Installation</h2>
+        <pre><code>cd source/nextjs-version
+bun install
+bun run dev</code></pre>
+        <p>Open <code>http://localhost:3000</code> in your browser.</p>
+      </section>
+
+      <section>
+        <h2>Production Build</h2>
+        <pre><code>cd source/nextjs-version
+bun run build
+bun run start</code></pre>
+      </section>
+
+      <section>
+        <h2>Static Demo Data</h2>
+        <p>
+          The theme uses static data and adapter services for preview mode. Most demo content,
+          courses, articles, faculty, testimonials, coupons, orders, admin records, learner
+          progress, and dashboard data live in <code>source/nextjs-version/lib/static-api.ts</code>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Logo and Branding</h2>
+        <p>
+          Main logos and app icons are stored in <code>source/nextjs-version/public/assets</code>.
+          You can replace <code>kasa-logo-light.png</code>, <code>kasa-logo-dark.png</code>,
+          favicon, and PWA icons with your own brand assets.
+        </p>
+      </section>
+
+      <section>
+        <h2>Theme Modes</h2>
+        <p>
+          Light and dark mode are included. Theme handling is inside
+          <code>source/nextjs-version/components/theme/theme-provider.tsx</code>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Vercel Deployment</h2>
+        <pre><code>cd source/nextjs-version
+npx vercel --prod --yes</code></pre>
+        <p>
+          Demo URL used for marketplace preview:
+          <a href="https://kasa-lms.vercel.app/">https://kasa-lms.vercel.app/</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>Included Major Pages</h2>
+        <ul>
+          <li>5 homepage demos</li>
+          <li>Course catalog and single course pages</li>
+          <li>Cart drawer, cart page, and checkout page</li>
+          <li>Learner dashboard, courses, classes, exams, certificates, profile, settings, and orders</li>
+          <li>Admin dashboard, course management, articles, coupons, categories, users, orders, refunds, media, roles, settings, and more</li>
+          <li>Faculty dashboard, faculty courses, classes, students, exams, recordings, and calendar</li>
+          <li>Articles, testimonials, about, contact, faculty listing, faculty details, and UI component demos</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Assets and Credits</h2>
+        <p>
+          Demo images are included for preview and template presentation. Replace them with your
+          own licensed production assets before launching a real client website. Keep records for
+          any third-party image licenses used in your marketplace listing.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

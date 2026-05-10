@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" fill="#0f172a"/>
+  <rect x="80" y="80" width="1040" height="600" rx="34" fill="#111827"/>
+  <circle cx="980" cy="150" r="86" fill="#22c55e" opacity=".9"/>
+  <circle cx="230" cy="625" r="110" fill="#38bdf8" opacity=".75"/>
+  <rect x="150" y="160" width="520" height="54" rx="14" fill="#f8fafc"/>
+  <rect x="150" y="250" width="790" height="28" rx="14" fill="#64748b"/>
+  <rect x="150" y="308" width="650" height="28" rx="14" fill="#475569"/>
+  <rect x="150" y="400" width="230" height="86" rx="20" fill="#22c55e"/>
+  <rect x="410" y="400" width="230" height="86" rx="20" fill="#38bdf8"/>
+  <rect x="670" y="400" width="230" height="86" rx="20" fill="#f8fafc"/>
+  <text x="150" y="585" fill="#f8fafc" font-family="Arial, sans-serif" font-size="62" font-weight="700">Next.js LMS</text>
+</svg>

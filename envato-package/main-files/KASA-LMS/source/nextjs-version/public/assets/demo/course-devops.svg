@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" fill="#eef2ff"/>
+  <rect x="100" y="100" width="1000" height="560" rx="38" fill="#312e81"/>
+  <path d="M230 380h190l80-120 145 240 90-120h230" fill="none" stroke="#f8fafc" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="230" cy="380" r="46" fill="#f97316"/>
+  <circle cx="500" cy="260" r="46" fill="#22c55e"/>
+  <circle cx="645" cy="500" r="46" fill="#38bdf8"/>
+  <circle cx="965" cy="380" r="46" fill="#facc15"/>
+  <text x="180" y="585" fill="#f8fafc" font-family="Arial, sans-serif" font-size="58" font-weight="700">Cloud DevOps</text>
+</svg>

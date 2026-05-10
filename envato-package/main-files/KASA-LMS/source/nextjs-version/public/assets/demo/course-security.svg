@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" fill="#fefce8"/>
+  <rect x="110" y="100" width="980" height="560" rx="38" fill="#1f2937"/>
+  <path d="M600 165l250 95v150c0 132-102 231-250 285-148-54-250-153-250-285V260l250-95z" fill="#facc15"/>
+  <path d="M600 260a85 85 0 00-85 85v55h170v-55a85 85 0 00-85-85z" fill="#1f2937"/>
+  <rect x="485" y="385" width="230" height="150" rx="28" fill="#111827"/>
+  <circle cx="600" cy="455" r="24" fill="#facc15"/>
+  <text x="170" y="595" fill="#f8fafc" font-family="Arial, sans-serif" font-size="56" font-weight="700">Cybersecurity</text>
+</svg>
