@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
@@ -10,6 +11,7 @@ type MegaItem = {
   label: string;
   href: string;
   description?: string;
+  image?: string;
 };
 
 interface NavbarItemProps {
@@ -59,7 +61,7 @@ const NavbarItem = ({ item }: NavbarItemProps) => {
           <ChevronDown className="size-3.5 transition-transform group-hover:rotate-180" />
         </Link>
 
-        <div className="invisible absolute left-1/2 top-full z-50 mt-4 w-[min(780px,calc(100vw-2rem))] -translate-x-1/2 translate-y-2 opacity-0 transition duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+        <div className="invisible absolute left-1/2 top-full z-50 w-[min(840px,calc(100vw-2rem))] -translate-x-1/2 translate-y-2 pt-4 opacity-0 transition duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
           <div className="overflow-hidden rounded-2xl border border-border/70 bg-background shadow-[0_28px_90px_rgba(15,23,42,0.18)] dark:bg-slate-950">
             <div className="grid gap-0 lg:grid-cols-[230px_1fr]">
               {item.featured ? (
@@ -99,14 +101,27 @@ const NavbarItem = ({ item }: NavbarItemProps) => {
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block rounded-xl px-3 py-2.5 text-sm transition hover:bg-primary/10 hover:text-primary"
+                          className="flex gap-3 rounded-xl px-3 py-2.5 text-sm transition hover:bg-primary/10 hover:text-primary"
                         >
-                          <span className="font-semibold">{child.label}</span>
-                          {child.description ? (
-                            <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
-                              {child.description}
+                          {child.image ? (
+                            <span className="relative mt-0.5 block size-12 shrink-0 overflow-hidden rounded-lg bg-muted">
+                              <Image
+                                src={child.image}
+                                alt={`${child.label} course`}
+                                fill
+                                sizes="48px"
+                                className="object-cover"
+                              />
                             </span>
                           ) : null}
+                          <span className="min-w-0">
+                            <span className="block font-semibold">{child.label}</span>
+                            {child.description ? (
+                              <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
+                                {child.description}
+                              </span>
+                            ) : null}
+                          </span>
                         </Link>
                       ))}
                     </div>

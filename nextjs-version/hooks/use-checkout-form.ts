@@ -12,11 +12,11 @@ export const useCheckoutForm = (user: User | null) => {
       lastName: user?.lastName || "",
       email: user?.email || "",
       phoneNumber: user?.phoneNumber || "",
-      address: "",
+      address: "221, Demo Learning Street, Sector 12",
       country: "India",
-      city: "",
-      state: "",
-      pincode: "",
+      state: "Delhi",
+      city: "New Delhi",
+      pincode: "110001",
     };
   }, [user]);
 

@@ -5,6 +5,28 @@ import { couponClientService } from "@/services/coupons/coupon.client";
 
 let latestPricingRun = 0;
 
+const toSafePrice = (value: unknown) => {
+  const price = Number(value);
+  return Number.isFinite(price) ? price : 0;
+};
+
+const sanitizeCartItems = (items: CartItem[] = []) =>
+  items
+    .filter((item) => Number.isFinite(Number(item?.id)))
+    .map((item) => ({
+      ...item,
+      id: Number(item.id),
+      title: item.title || "Demo Course",
+      price: toSafePrice(item.price),
+      image: item.image || "/assets/default-cover.jpg",
+      slug: item.slug || "full-stack-nextjs-mastery",
+      instructor: item.instructor || "Kasa Faculty",
+      totalDuration: item.totalDuration || "Self paced",
+      totalLectures: Number.isFinite(Number(item.totalLectures))
+        ? Number(item.totalLectures)
+        : 0,
+    }));
+
 type CartState = {
   cartItems: CartItem[];
   hasHydrated: boolean;
@@ -62,7 +84,7 @@ export const useCartStore = create<CartState>()(
         if (exists) return;
 
         set({
-          cartItems: [...get().cartItems, item],
+          cartItems: sanitizeCartItems([...get().cartItems, item]),
         });
 
         void get().refreshPricing();
@@ -88,7 +110,7 @@ export const useCartStore = create<CartState>()(
 
       replaceCartItems: (items) => {
         set({
-          cartItems: items,
+          cartItems: sanitizeCartItems(items),
         });
 
         void get().refreshPricing();
@@ -99,7 +121,7 @@ export const useCartStore = create<CartState>()(
       },
 
       totalPrice: () => {
-        return get().cartItems.reduce((t, i) => t + i.price, 0);
+        return get().cartItems.reduce((t, i) => t + toSafePrice(i.price), 0);
       },
 
       // =========================
@@ -120,7 +142,7 @@ export const useCartStore = create<CartState>()(
 
         if (!cartItems.length) return;
 
-        const cartTotal = cartItems.reduce((t, i) => t + i.price, 0);
+        const cartTotal = cartItems.reduce((t, i) => t + toSafePrice(i.price), 0);
         const courseIds = cartItems.map((i) => i.id);
         const base = Math.max(cartTotal - autoDiscount, 0);
 
@@ -164,7 +186,7 @@ export const useCartStore = create<CartState>()(
       recalculateTotal: () => {
         const { cartItems, autoDiscount, manualDiscount } = get();
 
-        const original = cartItems.reduce((t, i) => t + i.price, 0);
+        const original = cartItems.reduce((t, i) => t + toSafePrice(i.price), 0);
 
         const totalDiscount = autoDiscount + manualDiscount;
 
@@ -192,8 +214,9 @@ export const useCartStore = create<CartState>()(
           return;
         }
 
-        const cartTotal = cartItems.reduce((t, i) => t + i.price, 0);
-        const courseIds = cartItems.map((i) => i.id);
+        const sanitizedItems = sanitizeCartItems(cartItems);
+        const cartTotal = sanitizedItems.reduce((t, i) => t + toSafePrice(i.price), 0);
+        const courseIds = sanitizedItems.map((i) => i.id);
 
         let autoCoupon: string | null = null;
         let autoDiscount = 0;
@@ -244,6 +267,7 @@ export const useCartStore = create<CartState>()(
         }
 
         set({
+          cartItems: sanitizedItems,
           autoCoupon,
           autoDiscount,
           manualCoupon: normalizedManualCoupon,
@@ -256,6 +280,7 @@ export const useCartStore = create<CartState>()(
     {
       name: "cart-storage",
       onRehydrateStorage: () => (state) => {
+        state?.replaceCartItems(sanitizeCartItems(state.cartItems));
         state?.setHasHydrated(true);
         void state?.refreshPricing();
       },

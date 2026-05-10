@@ -2,66 +2,11 @@
 
 import { useCartStore } from "@/store/cart-store";
 import { orderClientService } from "@/services/orders/order.client";
-import { settingsClientService } from "@/services/settings/settings.client";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/error-handler";
 import { z } from "zod";
 import { checkoutSchema } from "@/schemas/checkout";
-import {
-  OpenRazorpayParams,
-  RazorpayInstance,
-  RazorpayOptions,
-  RazorpaySuccessResponse,
-} from "@/types/order";
 import { useRouter } from "next/navigation";
-
-declare global {
-  interface Window {
-    Razorpay?: new (options: RazorpayOptions) => RazorpayInstance;
-  }
-}
-
-const RAZORPAY_SCRIPT_URL = "https://checkout.razorpay.com/v1/checkout.js";
-let razorpayScriptPromise: Promise<void> | null = null;
-
-function loadRazorpayScript() {
-  if (typeof window === "undefined") {
-    return Promise.reject(new Error("Payment SDK can only load in browser"));
-  }
-
-  if (window.Razorpay) {
-    return Promise.resolve();
-  }
-
-  if (razorpayScriptPromise) {
-    return razorpayScriptPromise;
-  }
-
-  razorpayScriptPromise = new Promise((resolve, reject) => {
-    const existingScript = document.querySelector<HTMLScriptElement>(
-      `script[src="${RAZORPAY_SCRIPT_URL}"]`,
-    );
-
-    if (existingScript) {
-      existingScript.addEventListener("load", () => resolve(), { once: true });
-      existingScript.addEventListener(
-        "error",
-        () => reject(new Error("Payment SDK failed to load")),
-        { once: true },
-      );
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = RAZORPAY_SCRIPT_URL;
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("Payment SDK failed to load"));
-    document.body.appendChild(script);
-  });
-
-  return razorpayScriptPromise;
-}
 
 export const usePayment = () => {
   const router = useRouter();
@@ -70,106 +15,6 @@ export const usePayment = () => {
 
   // 🔥 ALWAYS fresh state (IMPORTANT)
   const getCartState = () => useCartStore.getState();
-
-  // ===============================
-  // 🔥 COMMON RAZORPAY HANDLER
-  // ===============================
-  const openRazorpay = async ({
-    orderId,
-    keyId,
-    razorpayOrderId,
-    amount,
-    currency,
-    data,
-    courses,
-  }: OpenRazorpayParams) => {
-    await loadRazorpayScript();
-    const Razorpay = window.Razorpay;
-
-    if (!Razorpay) {
-      toast.error("Payment SDK not loaded");
-      return;
-    }
-
-    const rzp = new Razorpay({
-      key: keyId,
-      amount,
-      currency,
-      order_id: razorpayOrderId,
-      name: "Code With Kasa",
-      description: "Course payment",
-
-      handler: async (response: RazorpaySuccessResponse) => {
-        try {
-          await orderClientService.verifyPayment(response);
-
-          toast.success("✅ Payment successful");
-
-          clearCart();
-
-          if (courses.length === 1) {
-            router.push(`/course/${courses[0].slug}/learn`);
-          } else {
-            router.push("/my-courses");
-          }
-        } catch {
-          toast("Payment received. Verifying...");
-          router.push("/my-courses");
-        }
-      },
-
-      modal: {
-        ondismiss: async function () {
-          try {
-            await orderClientService.cancelPayment(orderId);
-          } catch (error) {
-            console.error("Cancel payment reporting failed", error);
-          }
-          toast.error("⚠️ Payment cancelled");
-        },
-      },
-
-      prefill: {
-        name: `${data.firstName} ${data.lastName}`,
-        email: data.email,
-        contact: data.phoneNumber,
-      },
-
-      theme: {
-        color: "#0f172a",
-      },
-    });
-
-    rzp.open();
-
-    rzp.on("payment.failed", function (response: unknown) {
-      console.error("❌ Payment Failed:", response);
-      const failureResponse = response as {
-        error?: {
-          description?: string;
-          metadata?: {
-            payment_id?: string;
-            order_id?: string;
-          };
-        };
-      };
-
-      void orderClientService
-        .reportPaymentFailure(orderId, {
-          paymentId: failureResponse?.error?.metadata?.payment_id || null,
-          gatewayOrderId:
-            failureResponse?.error?.metadata?.order_id || razorpayOrderId,
-        })
-        .catch((error) => {
-          console.error("Payment failure reporting failed", error);
-        });
-
-      toast.error(
-        failureResponse?.error?.description ||
-          "Payment failed. Please try again.",
-      );
-    });
-  };
 
   // ===============================
   // 🥇 INITIATE PAYMENT
@@ -193,7 +38,10 @@ export const usePayment = () => {
         return;
       }
 
-      const originalPrice = cartItems.reduce((t, i) => t + i.price, 0);
+      const originalPrice = cartItems.reduce((t, i) => {
+        const price = Number(i.price);
+        return t + (Number.isFinite(price) ? price : 0);
+      }, 0);
 
       // 🔥 FINAL PAYABLE (after discount)
       const totalAmount =
@@ -235,21 +83,16 @@ export const usePayment = () => {
       };
 
       const res = await orderClientService.create(payload);
+      const courses = res.data.courses || cartItems;
 
-      const { razorpayOrderId, amount, currency, courses } = res.data;
+      toast.success("Demo order placed successfully");
+      clearCart();
 
-      const configRes = await settingsClientService.getPaymentConfig();
-      const { keyId } = configRes.data;
-
-      await openRazorpay({
-        orderId: res.data.orderId,
-        keyId,
-        razorpayOrderId,
-        amount,
-        currency,
-        data,
-        courses,
-      });
+      if (courses.length === 1 && courses[0]?.slug) {
+        router.push(`/course/${courses[0].slug}/learn`);
+      } else {
+        router.push("/my-courses");
+      }
     } catch (error: unknown) {
       toast.error(getErrorMessage(error));
     }
@@ -264,21 +107,15 @@ export const usePayment = () => {
   ) => {
     try {
       const res = await orderClientService.retry(orderId);
+      const courses = res.data.courses || [];
 
-      const { razorpayOrderId, amount, currency, courses } = res.data;
+      toast.success("Demo payment retry completed");
 
-      const configRes = await settingsClientService.getPaymentConfig();
-      const { keyId } = configRes.data;
-
-      await openRazorpay({
-        orderId: res.data.orderId,
-        keyId,
-        razorpayOrderId,
-        amount,
-        currency,
-        data,
-        courses,
-      });
+      if (courses.length === 1 && courses[0]?.slug) {
+        router.push(`/course/${courses[0].slug}/learn`);
+      } else {
+        router.push("/my-courses");
+      }
     } catch (error: unknown) {
       toast.error(getErrorMessage(error));
     }

@@ -768,7 +768,7 @@ const orders: any[] = [
     manualCouponCode: null,
     status: OrderStatus.PAID,
     paymentId: "pay_static_1001",
-    paymentMethod: "RAZORPAY",
+    paymentMethod: "DEMO",
     billingAddress: {
       firstName: "Ava",
       lastName: "Patel",
@@ -786,6 +786,34 @@ const orders: any[] = [
     updatedAt: now,
     paidAt: now,
   },
+];
+
+const countries = [
+  { id: 1, name: "India", countryCode: "IN" },
+];
+
+const states = [
+  { id: 1, countryId: 1, name: "Delhi" },
+  { id: 2, countryId: 1, name: "Maharashtra" },
+  { id: 3, countryId: 1, name: "Karnataka" },
+  { id: 4, countryId: 1, name: "Rajasthan" },
+  { id: 5, countryId: 1, name: "Gujarat" },
+  { id: 6, countryId: 1, name: "Uttar Pradesh" },
+];
+
+const cities = [
+  { id: 1, stateId: 1, name: "New Delhi" },
+  { id: 2, stateId: 1, name: "Dwarka" },
+  { id: 3, stateId: 2, name: "Mumbai" },
+  { id: 4, stateId: 2, name: "Pune" },
+  { id: 5, stateId: 3, name: "Bengaluru" },
+  { id: 6, stateId: 3, name: "Mysuru" },
+  { id: 7, stateId: 4, name: "Jaipur" },
+  { id: 8, stateId: 4, name: "Udaipur" },
+  { id: 9, stateId: 5, name: "Ahmedabad" },
+  { id: 10, stateId: 5, name: "Surat" },
+  { id: 11, stateId: 6, name: "Lucknow" },
+  { id: 12, stateId: 6, name: "Noida" },
 ];
 
 const notifications = [
@@ -1091,7 +1119,7 @@ export async function staticApiRequest<T>(
     if (path.includes("orders")) {
       return ok({
         orderId: orders[0].id,
-        razorpayOrderId: "order_static_1001",
+        gatewayOrderId: "order_static_demo",
         amount: orders[0].totalAmount,
         currency: orders[0].currency,
         courses: courses.map(({ id, slug, title }) => ({ id, slug, title })),
@@ -1121,18 +1149,18 @@ export async function staticApiRequest<T>(
     return ok({ site: siteSettings, socialProviders: [] }) as T;
   }
   if (path === "/settings/gateways/active") {
-    return ok([{ provider: "RAZORPAY", displayName: "Razorpay" }]) as T;
+    return ok([{ provider: "DEMO", displayName: "Demo Checkout" }]) as T;
   }
   if (path === "/settings/gateways") {
     return ok([
       {
         id: 1,
-        provider: "RAZORPAY",
-        displayName: "Razorpay",
+        provider: "COD",
+        displayName: "Demo Checkout",
         mode: "TEST",
         isActive: true,
-        keyIdPreview: "rzp_test_****",
-        hasKeySecret: true,
+        keyIdPreview: "demo_theme_mode",
+        hasKeySecret: false,
         hasWebhookSecret: false,
         webhookUrl: null,
         createdAt: now,
@@ -1167,7 +1195,17 @@ export async function staticApiRequest<T>(
   if (path === "/settings/social-auth" || path === "/settings/social-auth/active") {
     return ok(path.endsWith("active") ? [] : { providers: [] }) as T;
   }
-  if (path === "/settings/payment-config") return ok({ keyId: "rzp_test_static" }) as T;
+  if (path === "/settings/payment-config") return ok({ keyId: "demo_theme_mode" }) as T;
+
+  if (path === "/countries") return ok(countries) as T;
+  if (path.startsWith("/countries/") && path.endsWith("/states")) {
+    const countryId = Number(parts[1]);
+    return ok(states.filter((state) => state.countryId === countryId)) as T;
+  }
+  if (path.startsWith("/states/") && path.endsWith("/cities")) {
+    const stateId = Number(parts[1]);
+    return ok(cities.filter((city) => city.stateId === stateId)) as T;
+  }
 
   if (path === "/courses/featured") {
     return ok(courses.filter((course) => course.isFeatured)) as T;

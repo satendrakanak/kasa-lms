@@ -13,7 +13,10 @@ export const CartClient = () => {
   const router = useRouter();
 
   const cartItems = useCartStore((state) => state.cartItems);
-  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const total = cartItems.reduce((sum, item) => {
+    const price = Number(item.price);
+    return sum + (Number.isFinite(price) ? price : 0);
+  }, 0);
   const isEmpty = cartItems.length === 0;
 
   return (

@@ -17,10 +17,10 @@ export const navbarItems = [
       {
         label: "Popular Tracks",
         items: [
-          { label: "Full-Stack Next.js", href: "/course/full-stack-nextjs-mastery", description: "Hybrid enrolled course" },
-          { label: "API Architecture", href: "/course/api-architecture-bootcamp", description: "Paid self-learning course" },
-          { label: "UI Systems", href: "/course/ui-systems-with-tailwind", description: "Free completed course" },
-          { label: "Data Analytics AI", href: "/course/data-analytics-with-ai", description: "Hybrid paid program" },
+          { label: "Full-Stack Next.js", href: "/course/full-stack-nextjs-mastery", description: "Hybrid enrolled course", image: "/assets/demo/course-nextjs.svg" },
+          { label: "API Architecture", href: "/course/api-architecture-bootcamp", description: "Paid self-learning course", image: "/assets/demo/course-api.svg" },
+          { label: "UI Systems", href: "/course/ui-systems-with-tailwind", description: "Free completed course", image: "/assets/demo/course-ui.svg" },
+          { label: "Data Analytics AI", href: "/course/data-analytics-with-ai", description: "Hybrid paid program", image: "/assets/demo/course-data-ai.svg" },
         ],
       },
       {
@@ -44,29 +44,9 @@ export const navbarItems = [
     ],
   },
   {
-    label: "Pages",
+    label: "Articles",
     href: "/articles",
-    hasChild: true,
-    groups: [
-      {
-        label: "Public Pages",
-        items: [
-          { label: "Articles", href: "/articles", description: "Blog and learning guides" },
-          { label: "Testimonials", href: "/client-testimonials", description: "Learner social proof" },
-          { label: "Our Faculty", href: "/our-faculty", description: "Instructor directory" },
-          { label: "Contact", href: "/contact", description: "Lead form and support" },
-        ],
-      },
-      {
-        label: "Learner Demo",
-        items: [
-          { label: "Dashboard", href: "/dashboard", description: "Progress and stats" },
-          { label: "My Courses", href: "/my-courses", description: "Enrolled courses" },
-          { label: "Certificates", href: "/certificates", description: "Completion records" },
-          { label: "Orders", href: "/orders", description: "Purchase history" },
-        ],
-      },
-    ],
+    hasChild: false,
   },
   {
     label: "Faculty",
@@ -74,8 +54,13 @@ export const navbarItems = [
     hasChild: false,
   },
   {
-    label: "Cart",
-    href: "/cart",
+    label: "Client Testimonials",
+    href: "/client-testimonials",
+    hasChild: false,
+  },
+  {
+    label: "About",
+    href: "/about",
     hasChild: false,
   },
   {

@@ -34,8 +34,13 @@ export const OrderSummary = ({
 
   const retryTotalAmount = retryOrder ? Number(retryOrder.totalAmount) : 0;
   const originalPrice = isRetryFlow
-    ? retryTotalAmount
-    : cartItems.reduce((acc, item) => acc + item.price, 0);
+    ? Number.isFinite(retryTotalAmount)
+      ? retryTotalAmount
+      : 0
+    : cartItems.reduce((acc, item) => {
+        const price = Number(item.price);
+        return acc + (Number.isFinite(price) ? price : 0);
+      }, 0);
 
   const totalDiscount = isRetryFlow ? 0 : autoDiscount + manualDiscount;
   const finalPrice = isRetryFlow
@@ -167,8 +172,8 @@ export const OrderSummary = ({
                 {selectedGateway.displayName}
               </p>
 
-              <p className="text-xs text-muted-foreground">
-                Secure online payment
+          <p className="text-xs text-muted-foreground">
+                Demo order completion
               </p>
             </div>
           </div>
@@ -178,7 +183,7 @@ export const OrderSummary = ({
       {hasMultipleGateways && (
         <div className="mt-5 rounded-2xl border border-border bg-muted/50 p-4">
           <p className="mb-3 text-sm font-semibold text-card-foreground">
-            Choose Payment Method
+            Choose Order Method
           </p>
 
           <div className="space-y-2">
@@ -242,13 +247,13 @@ export const OrderSummary = ({
             Processing...
           </>
         ) : (
-          "Proceed to Payment"
+          "Place Demo Order"
         )}
       </Button>
 
       {isRetryFlow ? (
         <p className="mt-4 text-center text-xs text-muted-foreground">
-          Retrying your existing order
+          Retrying your existing demo order
         </p>
       ) : cartItems.length === 0 ? (
         <p className="mt-4 text-center text-xs text-muted-foreground">

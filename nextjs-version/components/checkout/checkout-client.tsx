@@ -269,14 +269,14 @@ const CheckoutClient = ({ gateways }: CheckoutClientProps) => {
                     </h1>
 
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                      Complete your billing details and choose a payment method
-                      to place your order.
+                      Complete your billing details and place a static demo
+                      order. No payment gateway is loaded in theme mode.
                     </p>
                   </div>
 
                   <div className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/15 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
                     <ShieldCheck className="h-4 w-4" />
-                    Secure payment
+                    Static checkout
                   </div>
                 </div>
               </div>

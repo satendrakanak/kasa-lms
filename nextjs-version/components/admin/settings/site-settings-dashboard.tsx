@@ -39,11 +39,10 @@ import { MediaModal } from "@/components/media/media-modal";
 import { FileType } from "@/types/file";
 
 const providers: { label: string; value: PaymentProvider }[] = [
-  { label: "Razorpay", value: "RAZORPAY" },
   { label: "Stripe", value: "STRIPE" },
   { label: "PayPal", value: "PAYPAL" },
   { label: "PayU", value: "PAYU" },
-  { label: "Cash on Delivery", value: "COD" },
+  { label: "Demo Checkout", value: "COD" },
 ];
 
 const modes: { label: string; value: PaymentMode }[] = [
@@ -58,7 +57,7 @@ const socialLabels: Record<SocialProvider, string> = {
 };
 
 const defaultGatewayForm: UpsertPaymentGatewayPayload = {
-  provider: "RAZORPAY",
+  provider: "COD",
   mode: "TEST",
   keyId: "",
   keySecret: "",

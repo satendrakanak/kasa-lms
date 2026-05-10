@@ -20,11 +20,13 @@ export const CartItemCard = ({ item, showRemove }: CartItemCardProps) => {
   const total = useCartStore((state) => state.totalPrice());
 
   const discount = autoDiscount + manualDiscount;
+  const price = Number.isFinite(Number(item.price)) ? Number(item.price) : 0;
+  const title = item.title || "Demo Course";
 
   const itemDiscount =
-    total > 0 ? Math.round((item.price / total) * discount) : 0;
+    total > 0 ? Math.round((price / total) * discount) : 0;
 
-  const finalPrice = Math.max(item.price - itemDiscount, 0);
+  const finalPrice = Math.max(price - itemDiscount, 0);
 
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("en-IN").format(value);
@@ -32,6 +34,7 @@ export const CartItemCard = ({ item, showRemove }: CartItemCardProps) => {
     item.image && item.image !== "/placeholder.jpg"
       ? item.image
       : "/assets/default-cover.jpg";
+  const slug = item.slug || "full-stack-nextjs-mastery";
 
   const handleRemove = () => {
     removeFromCart(item.id);
@@ -42,12 +45,12 @@ export const CartItemCard = ({ item, showRemove }: CartItemCardProps) => {
     <div className="academy-card group p-4 transition-all duration-300 hover:border-primary/25 hover:shadow-[0_24px_70px_color-mix(in_oklab,var(--primary)_12%,transparent)]">
       <div className="flex flex-col gap-4 sm:flex-row">
         <Link
-          href={`/course/${item.slug}`}
+          href={`/course/${slug}`}
           className="relative h-44 w-full shrink-0 overflow-hidden rounded-2xl bg-muted sm:h-32 sm:w-48"
         >
           <Image
             src={imageSrc}
-            alt={item.title}
+            alt={title}
             fill
             sizes="(max-width: 640px) 100vw, 192px"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -57,9 +60,9 @@ export const CartItemCard = ({ item, showRemove }: CartItemCardProps) => {
         </Link>
 
         <div className="min-w-0 flex-1">
-          <Link href={`/course/${item.slug}`}>
+          <Link href={`/course/${slug}`}>
             <h3 className="line-clamp-2 text-lg font-semibold leading-7 text-card-foreground transition-colors hover:text-primary">
-              {item.title}
+              {title}
             </h3>
           </Link>
 
@@ -107,7 +110,7 @@ export const CartItemCard = ({ item, showRemove }: CartItemCardProps) => {
                 </p>
 
                 <p className="mt-1 text-sm font-medium text-muted-foreground line-through">
-                  ₹{formatPrice(item.price)}
+                    ₹{formatPrice(price)}
                 </p>
 
                 {itemDiscount > 0 && (

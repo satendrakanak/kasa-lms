@@ -19,7 +19,10 @@ export const CartSummary = () => {
     removeCoupon,
   } = useCartStore();
 
-  const originalTotal = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const originalTotal = cartItems.reduce((sum, item) => {
+    const price = Number(item.price);
+    return sum + (Number.isFinite(price) ? price : 0);
+  }, 0);
 
   const totalDiscount = autoDiscount + manualDiscount;
   const finalTotal = Math.max(

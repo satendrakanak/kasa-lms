@@ -101,7 +101,7 @@ export default function Hero({ courses }: HeroProps) {
           <Swiper
             modules={[Pagination, EffectCards, Autoplay]}
             effect="cards"
-            loop={courses.length > 1}
+            loop={false}
             autoplay={{ delay: 3000 }}
             pagination={{ clickable: true }}
           >
@@ -130,7 +130,7 @@ export default function Hero({ courses }: HeroProps) {
           <div className="relative z-40 w-full max-w-85">
             <Swiper
               modules={[Pagination, Autoplay]}
-              loop={courses.length > 1}
+              loop={false}
               autoplay={{ delay: 3000 }}
               pagination={{ clickable: true }}
               className="pb-8"
