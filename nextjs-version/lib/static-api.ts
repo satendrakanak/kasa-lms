@@ -1687,6 +1687,19 @@ export async function staticApiRequest<T>(
     if (path === "/categories" || path === "/tags" || path === "/email-templates") {
       return ok({ id: 100, ...(body as object), createdAt: now, updatedAt: now, deletedAt: null }) as T;
     }
+    if (path === "/tags/bulk") {
+      const names = Array.isArray((body as any)?.names) ? (body as any).names : [];
+      return ok(
+        names.map((name: string, index: number) => ({
+          id: 100 + index,
+          name,
+          slug: name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
+          description: "Static demo tag",
+          createdAt: now,
+          updatedAt: now,
+        })),
+      ) as T;
+    }
     if (path.startsWith("/engagement/broadcasts")) {
       return ok({ ...engagementDashboard.broadcasts[0], ...(body as object), id: 100, updatedAt: now }) as T;
     }
@@ -1847,14 +1860,15 @@ export async function staticApiRequest<T>(
   }
   if (path === "/categories/by-type") {
     const type = new URLSearchParams(queryString).get("type")?.toLowerCase();
-    return ok({
-      data: categories.filter((category) =>
+    return ok(
+      categories.filter((category) =>
         type ? category.type?.toLowerCase() === type : true,
       ),
-    }) as T;
+    ) as T;
   }
   if (parts[0] === "categories" && parts[1]) return ok(byId(categories, parts[1])) as T;
-  if (path === "/tags" || path === "/tags/") return ok({ data: tags }) as T;
+  if (path === "/tags/") return ok(tags) as T;
+  if (path === "/tags") return ok({ data: tags }) as T;
   if (parts[0] === "tags" && parts[1]) return ok(byId(tags, parts[1])) as T;
 
   if (path === "/users") return ok(paginated(users)) as T;
