@@ -50,8 +50,8 @@ export default async function RootLayout({
       siteTagline: "Coding tutorials for you",
       siteDescription:
         "Practical coding education for learners who want clarity, mentorship, and real-world application.",
-      logoUrl: "/assets/cwk-logo.png",
-      footerLogoUrl: "/assets/cwk-logo.png",
+      logoUrl: "/assets/kasa-logo-light.png",
+      footerLogoUrl: "/assets/kasa-logo-dark.png",
       adminPanelName: "CWK",
       adminPanelIconUrl: "/assets/pwa-icon-192.png",
       faviconUrl: "/favicon.png",

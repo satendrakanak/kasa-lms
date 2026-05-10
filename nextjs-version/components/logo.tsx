@@ -2,11 +2,14 @@
 import Link from "next/link";
 import { useSiteSettings } from "@/context/site-settings-context";
 
+const LIGHT_LOGO = "/assets/kasa-logo-light.png";
+const DARK_LOGO = "/assets/kasa-logo-dark.png";
+
 const Logo = ({ footer = false }: { footer?: boolean }) => {
   const { site } = useSiteSettings();
-  const src = footer
-    ? site.footerLogoUrl || site.logoUrl || "/assets/cwk-logo.png"
-    : site.logoUrl || "/assets/cwk-logo.png";
+  const lightSrc = site.logoUrl || LIGHT_LOGO;
+  const darkSrc = site.footerLogoUrl || DARK_LOGO;
+  const lightClassName = footer ? "dark:hidden" : "dark:hidden";
 
   return (
     <Link
@@ -16,11 +19,19 @@ const Logo = ({ footer = false }: { footer?: boolean }) => {
       <div className="relative h-14 w-40 sm:h-15 sm:w-40 md:h-16 md:w-45">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          alt={site.siteName || "logo"}
-          src={src}
+          alt={site.siteName || "Kasa logo"}
+          src={lightSrc}
           width={250}
           height={60}
-          className="h-full w-auto object-contain"
+          className={`h-full w-auto object-contain ${lightClassName}`}
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt={site.siteName || "Kasa logo"}
+          src={darkSrc}
+          width={250}
+          height={60}
+          className="hidden h-full w-auto object-contain dark:block"
         />
       </div>
     </Link>

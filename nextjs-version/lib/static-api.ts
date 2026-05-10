@@ -748,8 +748,8 @@ const siteSettings = {
   siteTagline: "Practical coding courses for modern learners",
   siteDescription:
     "A polished LMS theme with courses, faculty, articles, certificates, dashboards, and dark mode.",
-  logoUrl: "/assets/cwk-logo.png",
-  footerLogoUrl: "/assets/cwk-logo.png",
+  logoUrl: "/assets/kasa-logo-light.png",
+  footerLogoUrl: "/assets/kasa-logo-dark.png",
   faviconUrl: "/favicon.png",
   adminPanelName: "Kasa LMS",
   adminPanelIconUrl: "/assets/pwa-icon-192.png",
