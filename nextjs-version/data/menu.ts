@@ -2,6 +2,7 @@ export const navbarItems = [
   {
     label: "Home",
     href: "/",
+    kind: "home-demos",
     hasChild: true,
     featured: {
       title: "Homepage Variations",
