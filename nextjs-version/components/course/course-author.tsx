@@ -5,7 +5,7 @@ import Link from "next/link";
 
 interface CourseAuthorProps {
   authorName: string;
-  authorPhoto: StaticImageData;
+  authorPhoto: StaticImageData | string;
 }
 
 const CourseAuthor = ({ authorName, authorPhoto }: CourseAuthorProps) => {

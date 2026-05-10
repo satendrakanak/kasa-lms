@@ -90,6 +90,7 @@ export default function Hero({ courses }: HeroProps) {
               src="/assets/courses/banner-01.webp"
               alt="Hero student"
               fill
+              sizes="520px"
               priority
               className="object-contain object-bottom"
             />
@@ -160,6 +161,7 @@ export default function Hero({ courses }: HeroProps) {
               src="/assets/courses/banner-01.webp"
               alt="Hero student"
               fill
+              sizes="420px"
               priority
               className="object-contain object-bottom"
             />

@@ -35,7 +35,12 @@ export const MobileMenuItems = () => {
 
       <div className="flex flex-col gap-1 px-3 py-4">
         {navbarItems.map((item) => (
-          <MenuItem key={item.label} label={item.label} href={item.href} />
+          <MenuItem
+            key={item.label}
+            label={item.label}
+            href={item.href}
+            subItems={item.groups?.flatMap((group) => group.items)}
+          />
         ))}
       </div>
 

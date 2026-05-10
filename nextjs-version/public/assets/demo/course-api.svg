@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+  <rect width="1200" height="760" fill="#f8fafc"/>
+  <rect x="94" y="96" width="1012" height="568" rx="36" fill="#12343b"/>
+  <path d="M210 230h260m-210 95h360m-310 95h500" stroke="#f4d35e" stroke-width="24" stroke-linecap="round"/>
+  <circle cx="812" cy="275" r="70" fill="#ee964b"/>
+  <circle cx="924" cy="410" r="92" fill="#0ead69"/>
+  <path d="M812 275l112 135M470 325l342-50M620 420l304-10" stroke="#f8fafc" stroke-width="16" stroke-linecap="round"/>
+  <text x="180" y="585" fill="#f8fafc" font-family="Arial, sans-serif" font-size="58" font-weight="700">API Architecture</text>
+</svg>

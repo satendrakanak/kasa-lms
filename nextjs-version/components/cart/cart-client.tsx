@@ -95,8 +95,12 @@ export const CartClient = () => {
                 </div>
               </div>
 
-              {cartItems.map((item) => (
-                <CartItemCard key={item.id} item={item} showRemove />
+              {cartItems.map((item, index) => (
+                <CartItemCard
+                  key={`${item.id}-${item.slug || index}`}
+                  item={item}
+                  showRemove
+                />
               ))}
             </div>
 

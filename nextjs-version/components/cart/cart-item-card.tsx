@@ -28,6 +28,10 @@ export const CartItemCard = ({ item, showRemove }: CartItemCardProps) => {
 
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("en-IN").format(value);
+  const imageSrc =
+    item.image && item.image !== "/placeholder.jpg"
+      ? item.image
+      : "/assets/default-cover.jpg";
 
   const handleRemove = () => {
     removeFromCart(item.id);
@@ -42,7 +46,7 @@ export const CartItemCard = ({ item, showRemove }: CartItemCardProps) => {
           className="relative h-44 w-full shrink-0 overflow-hidden rounded-2xl bg-muted sm:h-32 sm:w-48"
         >
           <Image
-            src={item.image || "/placeholder.jpg"}
+            src={imageSrc}
             alt={item.title}
             fill
             sizes="(max-width: 640px) 100vw, 192px"

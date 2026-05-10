@@ -11,6 +11,12 @@ interface CourseBannerProps {
 }
 
 export function CourseBanner({ course }: CourseBannerProps) {
+  const faculty = course.faculties?.[0] || course.createdBy;
+  const authorName = [faculty?.firstName, faculty?.lastName]
+    .filter(Boolean)
+    .join(" ")
+    .trim();
+
   return (
     <section className="academy-hero-gradient relative overflow-hidden py-20 text-white">
       <Container>
@@ -33,8 +39,8 @@ export function CourseBanner({ course }: CourseBannerProps) {
               enrolledStudentCount={2365}
             />
             <CourseAuthor
-              authorName="Satendra Singh"
-              authorPhoto={guestAuthor}
+              authorName={authorName || "Kasa Faculty"}
+              authorPhoto={faculty?.avatar?.path || faculty?.avatarUrl || guestAuthor}
             />
             <CourseUpdateDetails
               lastUpdateDate="March 25, 2024"

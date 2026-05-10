@@ -107,11 +107,12 @@ export function CourseCard({ course, coupon }: CourseCardProps) {
     <div className="academy-card group flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_color-mix(in_oklab,var(--primary)_18%,transparent)]">
       {/* IMAGE */}
       <div className="relative h-48 overflow-hidden">
-        <Link href={`/course/${course.slug}`}>
+        <Link href={`/course/${course.slug}`} className="relative block h-full">
           <Image
             src={course.image?.path || "/assets/default.png"}
             alt={course.imageAlt || course.title}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover transition duration-500 group-hover:scale-105"
           />
         </Link>

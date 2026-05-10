@@ -34,9 +34,9 @@ export type SidebarNavItem = SidebarItem & {
 
 export const sidebarData = {
   user: {
-    name: "Satendra",
-    email: "satendra@example.com",
-    avatar: "/avatars/user.jpg",
+    name: "Ava Patel",
+    email: "ava-patel@kasalms.com",
+    avatar: "/assets/demo/faculty-ava-patel.svg",
   },
 
   navMain: [
