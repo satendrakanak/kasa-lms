@@ -612,6 +612,60 @@ const courseReviewSummary = {
   })),
 };
 
+const facultyReviews = [
+  {
+    id: 1,
+    rating: 5,
+    comment:
+      "Clear explanations, practical project reviews, and a calm teaching style that made advanced topics approachable.",
+    isPublished: true,
+    user: users[1],
+    faculty: users[0],
+    createdAt: "2026-05-08T09:00:00.000Z",
+    updatedAt: now,
+  },
+  {
+    id: 2,
+    rating: 5,
+    comment:
+      "The feedback on assignments felt specific and useful. Great mentor for learners who want real implementation confidence.",
+    isPublished: true,
+    user: users[2],
+    faculty: users[0],
+    createdAt: "2026-05-07T09:00:00.000Z",
+    updatedAt: now,
+  },
+  {
+    id: 3,
+    rating: 4,
+    comment:
+      "Strong industry examples and thoughtful guidance during live sessions.",
+    isPublished: true,
+    user: users[3],
+    faculty: users[1],
+    createdAt: "2026-05-06T09:00:00.000Z",
+    updatedAt: now,
+  },
+];
+
+const getFacultyReviews = (facultyId: number) =>
+  facultyReviews.filter((review) => review.faculty?.id === facultyId);
+
+const getFacultyReviewSummary = (facultyId: number) => {
+  const reviews = getFacultyReviews(facultyId);
+
+  return {
+    average: reviews.length
+      ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
+      : 0,
+    total: reviews.length,
+    breakdown: [5, 4, 3, 2, 1].map((rating) => ({
+      rating,
+      count: reviews.filter((review) => review.rating === rating).length,
+    })),
+  };
+};
+
 const courseQuestions = [
   {
     id: 1,
@@ -767,11 +821,11 @@ const siteSettings = {
   footerPrimaryCtaHref: "/courses",
   footerSecondaryCtaLabel: "Contact Us",
   footerSecondaryCtaHref: "/contact",
-  facebookUrl: "",
-  instagramUrl: "",
-  youtubeUrl: "",
-  linkedinUrl: "",
-  twitterUrl: "",
+  facebookUrl: "https://facebook.com/kasalms",
+  instagramUrl: "https://instagram.com/kasalms",
+  youtubeUrl: "https://youtube.com/@kasalms",
+  linkedinUrl: "https://linkedin.com/company/kasalms",
+  twitterUrl: "https://x.com/kasalms",
 };
 
 const orders: any[] = [
@@ -1757,6 +1811,9 @@ export async function staticApiRequest<T>(
     if (path.includes("/course-reviews/")) {
       return ok({ ...courseReviews[0], ...(body as object) }) as T;
     }
+    if (path.includes("/faculty-reviews/")) {
+      return ok({ ...facultyReviews[0], ...(body as object), updatedAt: now }) as T;
+    }
     if (path.includes("/course-qa/")) {
       return ok(courseQuestions[0]) as T;
     }
@@ -2053,6 +2110,16 @@ export async function staticApiRequest<T>(
   }
   if (path.startsWith("/course-reviews/course/")) return ok(courseReviews) as T;
   if (path === "/course-reviews") return ok(courseReviews) as T;
+
+  if (path.startsWith("/faculty-reviews/faculty/") && path.endsWith("/summary")) {
+    return ok(getFacultyReviewSummary(Number(parts[2]))) as T;
+  }
+  if (path.startsWith("/faculty-reviews/faculty/") && path.endsWith("/mine")) {
+    return ok(getFacultyReviews(Number(parts[2]))[0] || null) as T;
+  }
+  if (path.startsWith("/faculty-reviews/faculty/")) {
+    return ok(getFacultyReviews(Number(parts[2]))) as T;
+  }
 
   if (path.startsWith("/course-qa/course/")) return ok(courseQuestions) as T;
   if (path === "/course-qa/questions") return ok(courseQuestions) as T;

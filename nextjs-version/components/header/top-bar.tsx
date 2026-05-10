@@ -56,9 +56,9 @@ const Topbar = ({ hidden }: TopbarProps) => {
       )}
     >
       <Container>
-        <div className="flex min-h-9 flex-col items-center justify-center gap-1.5 py-1.5 sm:min-h-10 sm:flex-row sm:justify-between sm:gap-4 sm:py-0">
+        <div className="flex min-h-10 items-center justify-between gap-3 overflow-hidden">
           {/* Social Icons */}
-          <div className="flex items-center gap-1.5 md:gap-2">
+          <div className="flex shrink-0 items-center gap-1.5 md:gap-2">
             {socialLinks.map((link) => (
               <a
                 key={link.name}
@@ -74,11 +74,11 @@ const Topbar = ({ hidden }: TopbarProps) => {
           </div>
 
           {/* Contact */}
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[11px] leading-none text-white/85 md:gap-x-5 md:text-sm">
+          <div className="flex min-w-0 items-center justify-end gap-x-2 text-[11px] leading-none text-white/85 md:gap-x-5 md:text-sm">
             {site.supportPhone && (
               <a
                 href={`tel:${site.supportPhone}`}
-                className="flex items-center gap-1.5 transition hover:text-white"
+                className="hidden items-center gap-1.5 transition hover:text-white sm:flex"
               >
                 <FaPhoneVolume className="h-3 w-3 md:h-3.5 md:w-3.5" />
                 <span>{site.supportPhone}</span>
@@ -91,7 +91,7 @@ const Topbar = ({ hidden }: TopbarProps) => {
                 className="flex min-w-0 items-center gap-1.5 transition hover:text-white"
               >
                 <TfiEmail className="h-3 w-3 shrink-0 md:h-3.5 md:w-3.5" />
-                <span className="max-w-[170px] truncate sm:max-w-[220px]">
+                <span className="max-w-[150px] truncate sm:max-w-[220px]">
                   {site.supportEmail}
                 </span>
               </a>

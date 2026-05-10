@@ -91,11 +91,11 @@ const defaultSiteSettings: SiteSettings = {
   footerPrimaryCtaHref: "/courses",
   footerSecondaryCtaLabel: "Talk to Us",
   footerSecondaryCtaHref: "/contact",
-  facebookUrl: "",
-  instagramUrl: "",
-  youtubeUrl: "",
-  linkedinUrl: "",
-  twitterUrl: "",
+  facebookUrl: "https://facebook.com/kasalms",
+  instagramUrl: "https://instagram.com/kasalms",
+  youtubeUrl: "https://youtube.com/@kasalms",
+  linkedinUrl: "https://linkedin.com/company/kasalms",
+  twitterUrl: "https://x.com/kasalms",
 };
 
 const defaultEmailSettings: EmailSettings = {
