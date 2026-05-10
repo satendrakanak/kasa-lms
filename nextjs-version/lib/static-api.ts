@@ -471,6 +471,27 @@ const allLectures = courses.flatMap((course) =>
   course.chapters.flatMap((chapter: any) => chapter.lectures),
 );
 
+const courseToCartItem = (course: any, meta: any = {}) => ({
+  id: course.id,
+  title: course.title,
+  price: Number(course.priceInr || 0),
+  image: course.image?.path,
+  slug: course.slug,
+  instructor:
+    meta.instructor ||
+    course.faculties
+      ?.map((faculty: any) =>
+        [faculty.firstName, faculty.lastName].filter(Boolean).join(" "),
+      )
+      .join(", ") ||
+    "Kasa Faculty",
+  totalDuration: meta.totalDuration || course.duration || "Self paced",
+  totalLectures:
+    meta.totalLectures ||
+    course.chapters?.flatMap((chapter: any) => chapter.lectures || []).length ||
+    0,
+});
+
 const testimonials: any[] = [
   {
     id: "1",
@@ -1125,6 +1146,24 @@ export async function staticApiRequest<T>(
         courses: courses.map(({ id, slug, title }) => ({ id, slug, title })),
       }) as T;
     }
+    if (path === "/cart/sync") {
+      const items = Array.isArray((body as any)?.items)
+        ? (body as any).items
+        : [];
+      const cartItems = items
+        .map((item: any) => {
+          const course = courses.find(
+            (currentCourse) => currentCourse.id === Number(item.courseId),
+          );
+          return course ? courseToCartItem(course, item) : null;
+        })
+        .filter(Boolean);
+
+      return ok({ id: 1, items: cartItems }) as T;
+    }
+    if (path === "/cart") {
+      return ok({ success: true }) as T;
+    }
     if (path.startsWith("/exams/course/") && path.endsWith("/attempts/start")) {
       return ok(learnerActiveAttempt) as T;
     }
@@ -1277,7 +1316,7 @@ export async function staticApiRequest<T>(
     ]) as T;
   }
 
-  if (path === "/cart") return ok({ items: courses.slice(0, 1), total: 79 }) as T;
+  if (path === "/cart") return ok({ id: 1, items: [] }) as T;
   if (path === "/certificates/my") return ok(certificates) as T;
   if (path.startsWith("/certificates/course/")) return ok(courseCertificate) as T;
   if (path === "/certificates/admin/dashboard") {

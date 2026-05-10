@@ -6,7 +6,6 @@ import Link from "next/link";
 import { ShoppingCart, Check } from "lucide-react";
 import { useCartStore } from "@/store/cart-store";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getCourseMeta } from "@/helpers/course-meta";
 import { CourseProgressBar } from "./course-progress-bar";
@@ -47,12 +46,11 @@ const getInstructorLabel = (course: Course) => {
 
 export function CourseCard({ course, coupon }: CourseCardProps) {
   const addToCart = useCartStore((s) => s.addToCart);
+  const openCartSheet = useCartStore((s) => s.openCartSheet);
   const [meta, setMeta] = useState({
     totalLectures: 0,
     totalDuration: "0m",
   });
-
-  const router = useRouter();
 
   useEffect(() => {
     const loadMeta = async () => {
@@ -82,7 +80,7 @@ export function CourseCard({ course, coupon }: CourseCardProps) {
     e.stopPropagation();
 
     if (alreadyAdded) {
-      router.push("/cart");
+      openCartSheet();
       return;
     }
 
@@ -99,13 +97,7 @@ export function CourseCard({ course, coupon }: CourseCardProps) {
 
     toast.success("Added to cart 🛒", {
       description: course.title,
-      action: {
-        label: "View Cart",
-        onClick: () => router.push("/cart"),
-      },
     });
-
-    router.push("/cart");
   };
 
   return (

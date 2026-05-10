@@ -31,6 +31,7 @@ const coursePrice = (course: Course, coupon?: CouponApplyResponse | null) =>
 export const CouponBulkClient = ({ courses, view = "grid" }: Props) => {
   const [couponMap, setCouponMap] = useState<CouponMap>({});
   const addToCart = useCartStore((state) => state.addToCart);
+  const openCartSheet = useCartStore((state) => state.openCartSheet);
   const cartItems = useCartStore((state) => state.cartItems);
   const router = useRouter();
 
@@ -70,7 +71,7 @@ export const CouponBulkClient = ({ courses, view = "grid" }: Props) => {
             }
 
             if (alreadyAdded) {
-              router.push("/cart");
+              openCartSheet();
               return;
             }
 
@@ -87,7 +88,6 @@ export const CouponBulkClient = ({ courses, view = "grid" }: Props) => {
               slug: course.slug,
             });
             toast.success("Added to cart");
-            router.push("/cart");
           };
 
           return (

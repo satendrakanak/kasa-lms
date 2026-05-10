@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { CheckCircle2, Loader, ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 
@@ -36,8 +35,8 @@ export const AddToCartButton = ({
   course,
   className,
 }: AddToCartButtonProps) => {
-  const router = useRouter();
   const addToCart = useCartStore((state) => state.addToCart);
+  const openCartSheet = useCartStore((state) => state.openCartSheet);
 
   const alreadyAdded = useCartStore((state) =>
     state.cartItems.some((item) => item.id === course.id),
@@ -70,7 +69,7 @@ export const AddToCartButton = ({
 
   const handleAddToCart = async () => {
     if (alreadyAdded) {
-      router.push("/cart");
+      openCartSheet();
       return;
     }
 
@@ -93,10 +92,6 @@ export const AddToCartButton = ({
 
     toast.success("Added to cart", {
       description: course.title,
-      action: {
-        label: "View Cart",
-        onClick: () => router.push("/cart"),
-      },
     });
   };
 
@@ -123,7 +118,7 @@ export const AddToCartButton = ({
         ) : alreadyAdded ? (
           <>
             <CheckCircle2 className="h-5 w-5" />
-            Go to Cart
+            View Cart
           </>
         ) : (
           <>

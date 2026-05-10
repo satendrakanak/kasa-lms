@@ -38,12 +38,16 @@ type CartState = {
   manualDiscount: number;
 
   finalAmount: number;
+  isCartSheetOpen: boolean;
 
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
   replaceCartItems: (items: CartItem[]) => void;
   setHasHydrated: (value: boolean) => void;
+  openCartSheet: () => void;
+  closeCartSheet: () => void;
+  setCartSheetOpen: (value: boolean) => void;
 
   isInCart: (id: number) => boolean;
   totalPrice: () => number;
@@ -69,11 +73,16 @@ export const useCartStore = create<CartState>()(
       manualDiscount: 0,
 
       finalAmount: 0,
+      isCartSheetOpen: false,
 
       setHasHydrated: (value) =>
         set({
           hasHydrated: value,
         }),
+
+      openCartSheet: () => set({ isCartSheetOpen: true }),
+      closeCartSheet: () => set({ isCartSheetOpen: false }),
+      setCartSheetOpen: (value) => set({ isCartSheetOpen: value }),
 
       // =========================
       // 🛒 CART
@@ -85,6 +94,7 @@ export const useCartStore = create<CartState>()(
 
         set({
           cartItems: sanitizeCartItems([...get().cartItems, item]),
+          isCartSheetOpen: true,
         });
 
         void get().refreshPricing();
@@ -279,6 +289,14 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: "cart-storage",
+      partialize: (state) => ({
+        cartItems: state.cartItems,
+        autoCoupon: state.autoCoupon,
+        manualCoupon: state.manualCoupon,
+        autoDiscount: state.autoDiscount,
+        manualDiscount: state.manualDiscount,
+        finalAmount: state.finalAmount,
+      }),
       onRehydrateStorage: () => (state) => {
         state?.replaceCartItems(sanitizeCartItems(state.cartItems));
         state?.setHasHydrated(true);
