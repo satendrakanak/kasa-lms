@@ -81,7 +81,10 @@ export function CourseCard({ course, coupon }: CourseCardProps) {
     e.preventDefault();
     e.stopPropagation();
 
-    if (alreadyAdded) return;
+    if (alreadyAdded) {
+      router.push("/cart");
+      return;
+    }
 
     addToCart({
       id: course.id,
@@ -101,6 +104,8 @@ export function CourseCard({ course, coupon }: CourseCardProps) {
         onClick: () => router.push("/cart"),
       },
     });
+
+    router.push("/cart");
   };
 
   return (

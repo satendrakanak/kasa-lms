@@ -64,6 +64,11 @@ export const navbarItems = [
     hasChild: false,
   },
   {
+    label: "Components",
+    href: "/components",
+    hasChild: false,
+  },
+  {
     label: "Contact",
     href: "/contact",
     hasChild: false,

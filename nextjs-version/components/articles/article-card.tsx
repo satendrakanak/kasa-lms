@@ -27,7 +27,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
         <div className="absolute inset-x-0 top-0 h-48 bg-[radial-gradient(circle_at_50%_0%,color-mix(in_oklab,var(--primary)_14%,transparent),transparent_65%)]" />
       </div>
 
-      <div className="relative h-52 w-full overflow-hidden rounded-[24px] bg-muted">
+      <div className="article-thumb relative h-52 w-full overflow-hidden rounded-[24px] bg-muted">
         <Image
           src={article.featuredImage?.path || "/assets/placeholder.jpg"}
           alt={article.title}
