@@ -47,7 +47,7 @@ const StickySidebar = ({ course }: StickySidebarProps) => {
         <div className="mb-4">
           <div className="relative">
             <Image
-              src={course.image?.path || "/placeholder.jpg"}
+              src={course.image?.path || "/assets/default-cover.jpg"}
               alt={course.title || "Course Image"}
               width={950}
               height={600}

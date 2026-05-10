@@ -30,10 +30,7 @@ export const CartItemCard = ({ item, showRemove }: CartItemCardProps) => {
 
   const formatPrice = (value: number) =>
     new Intl.NumberFormat("en-IN").format(value);
-  const imageSrc =
-    item.image && item.image !== "/placeholder.jpg"
-      ? item.image
-      : "/assets/default-cover.jpg";
+  const imageSrc = item.image || "/assets/default-cover.jpg";
   const slug = item.slug || "full-stack-nextjs-mastery";
 
   const handleRemove = () => {

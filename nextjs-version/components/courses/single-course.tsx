@@ -26,7 +26,7 @@ const SingleCourse = ({ course, className }: SingleCourseProps) => {
         <div className="w-full text-start items-start bg-white rounded-md shadow-sm p-4">
           <div className="relative w-full h-full">
             <Image
-              src={course.image?.path || "/placeholder.jpg"}
+              src={course.image?.path || "/assets/default-cover.jpg"}
               alt={course.title || "Course Image"}
               width={950}
               height={600}

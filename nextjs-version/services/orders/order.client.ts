@@ -9,7 +9,6 @@ import {
 } from "@/types/order";
 
 export const orderClientService = {
-  // 🔥 Create Order
   create: (data: CreateOrderPayload) =>
     withAuthRetry(() =>
       apiClient.post<ApiResponse<CreateOrderResponse>>("/api/orders", data),

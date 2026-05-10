@@ -33,7 +33,7 @@ export default function CourseHeroCard({
       >
         <Image
           alt={course.title}
-          src={course.image?.path || "/placeholder.jpg"}
+          src={course.image?.path || "/assets/default-cover.jpg"}
           width={950}
           height={600}
           className={

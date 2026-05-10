@@ -103,7 +103,7 @@ export const CourseSidebarCard = ({ course }: CourseSidebarCardProps) => {
     <aside className="academy-card overflow-hidden p-4 shadow-[0_28px_90px_color-mix(in_oklab,var(--primary)_14%,transparent)]">
       <div className="relative overflow-hidden rounded-2xl bg-muted">
         <Image
-          src={course.image?.path || "/placeholder.jpg"}
+          src={course.image?.path || "/assets/default-cover.jpg"}
           alt={course.title || "Course Image"}
           width={950}
           height={600}

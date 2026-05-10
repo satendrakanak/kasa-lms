@@ -29,7 +29,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
 
       <div className="article-thumb relative h-52 w-full overflow-hidden rounded-[24px] bg-muted">
         <Image
-          src={article.featuredImage?.path || "/assets/placeholder.jpg"}
+          src={article.featuredImage?.path || "/assets/default-cover.jpg"}
           alt={article.title}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"

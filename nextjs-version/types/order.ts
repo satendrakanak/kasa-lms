@@ -76,7 +76,7 @@ export type CreateOrderPayload = {
 
 export interface CreateOrderResponse {
   orderId: number;
-  razorpayOrderId: string;
+  gatewayOrderId: string;
   amount: number;
   currency: string;
   courses: {
@@ -87,9 +87,9 @@ export interface CreateOrderResponse {
 }
 
 export interface VerifyPaymentPayload {
-  razorpay_order_id: string;
-  razorpay_payment_id: string;
-  razorpay_signature: string;
+  gateway_order_id: string;
+  gateway_payment_id: string;
+  gateway_signature: string;
 }
 
 export interface OrderItem {
@@ -168,10 +168,10 @@ export interface RefundRequest {
   failedAt?: string | null;
 }
 
-export type RazorpaySuccessResponse = {
-  razorpay_payment_id: string;
-  razorpay_order_id: string;
-  razorpay_signature: string;
+export type PaymentSuccessResponse = {
+  gateway_payment_id: string;
+  gateway_order_id: string;
+  gateway_signature: string;
 };
 
 export type CourseRedirect = {
@@ -180,10 +180,10 @@ export type CourseRedirect = {
   title: string;
 };
 
-export type OpenRazorpayParams = {
+export type OpenPaymentModalParams = {
   orderId: number;
   keyId: string;
-  razorpayOrderId: string;
+  gatewayOrderId: string;
   amount: number;
   currency: string;
 
@@ -192,7 +192,7 @@ export type OpenRazorpayParams = {
   courses: CourseRedirect[];
 };
 
-export type RazorpayOptions = {
+export type PaymentModalOptions = {
   key: string;
   amount: number;
   currency: string;
@@ -201,7 +201,7 @@ export type RazorpayOptions = {
   name: string;
   description: string;
 
-  handler: (response: RazorpaySuccessResponse) => void;
+  handler: (response: PaymentSuccessResponse) => void;
 
   prefill?: {
     name?: string;
@@ -218,7 +218,7 @@ export type RazorpayOptions = {
   };
 };
 
-export interface RazorpayInstance {
+export interface PaymentModalInstance {
   open(): void;
   on(event: "payment.failed", handler: (response: unknown) => void): void;
 }

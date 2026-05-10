@@ -975,7 +975,7 @@ const contactLeads = [
     status: "QUALIFIED",
     source: "Contact page",
     pageUrl: "/contact",
-    adminNotes: "Send enterprise demo proposal.",
+    adminNotes: "Send team training proposal.",
     user: null,
     createdAt: "2026-05-09T14:20:00.000Z",
     updatedAt: now,
