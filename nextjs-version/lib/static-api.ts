@@ -1,4 +1,5 @@
 import { OrderStatus, RefundRequestStatus } from "@/types/order";
+import { CouponScope, CouponStatus, CouponType } from "@/types/coupon";
 
 type Method = "GET" | "POST" | "PATCH" | "DELETE";
 
@@ -809,6 +810,380 @@ const orders: any[] = [
   },
 ];
 
+const coupons: any[] = [
+  {
+    id: 1,
+    code: "KASA25",
+    type: CouponType.PERCENTAGE,
+    value: 25,
+    maxDiscount: 2500,
+    minOrderValue: 4999,
+    scope: CouponScope.GLOBAL,
+    applicableCourseIds: [],
+    isAutoApply: true,
+    usageLimit: 500,
+    usedCount: 186,
+    perUserLimit: 1,
+    validFrom: "2026-05-01T00:00:00.000Z",
+    validTill: "2026-06-30T23:59:59.000Z",
+    status: CouponStatus.ACTIVE,
+    createdAt: "2026-05-01T09:00:00.000Z",
+    updatedAt: now,
+    deletedAt: null,
+  },
+  {
+    id: 2,
+    code: "NEXTJS1000",
+    type: CouponType.FIXED,
+    value: 1000,
+    maxDiscount: 1000,
+    minOrderValue: 6999,
+    scope: CouponScope.COURSE,
+    applicableCourseIds: [1, 4],
+    isAutoApply: false,
+    usageLimit: 120,
+    usedCount: 48,
+    perUserLimit: 1,
+    validFrom: "2026-05-05T00:00:00.000Z",
+    validTill: "2026-07-15T23:59:59.000Z",
+    status: CouponStatus.ACTIVE,
+    createdAt: "2026-05-05T09:00:00.000Z",
+    updatedAt: now,
+    deletedAt: null,
+  },
+  {
+    id: 3,
+    code: "LIVEBATCH15",
+    type: CouponType.PERCENTAGE,
+    value: 15,
+    maxDiscount: 1800,
+    minOrderValue: 9999,
+    scope: CouponScope.COURSE,
+    applicableCourseIds: [4, 9],
+    isAutoApply: false,
+    usageLimit: 80,
+    usedCount: 22,
+    perUserLimit: 1,
+    validFrom: "2026-04-20T00:00:00.000Z",
+    validTill: "2026-05-31T23:59:59.000Z",
+    status: CouponStatus.ACTIVE,
+    createdAt: "2026-04-20T09:00:00.000Z",
+    updatedAt: now,
+    deletedAt: null,
+  },
+  {
+    id: 4,
+    code: "ALUMNI500",
+    type: CouponType.FIXED,
+    value: 500,
+    maxDiscount: 500,
+    minOrderValue: 2999,
+    scope: CouponScope.GLOBAL,
+    applicableCourseIds: [],
+    isAutoApply: false,
+    usageLimit: 250,
+    usedCount: 250,
+    perUserLimit: 2,
+    validFrom: "2026-03-01T00:00:00.000Z",
+    validTill: "2026-04-30T23:59:59.000Z",
+    status: CouponStatus.EXPIRED,
+    createdAt: "2026-03-01T09:00:00.000Z",
+    updatedAt: now,
+    deletedAt: null,
+  },
+];
+
+const contactLeads = [
+  {
+    id: 1,
+    fullName: "Rohan Mehta",
+    email: "rohan.mehta@example.com",
+    phoneNumber: "+91 98765 12001",
+    subject: "Need guidance for Full-Stack Next.js Mastery",
+    message:
+      "I want to understand the live session schedule and whether the course includes portfolio review.",
+    status: "NEW",
+    source: "Course detail page",
+    pageUrl: "/course/full-stack-nextjs-mastery",
+    adminNotes: "High intent learner. Call during evening slot.",
+    user: null,
+    createdAt: "2026-05-10T08:15:00.000Z",
+    updatedAt: now,
+  },
+  {
+    id: 2,
+    fullName: "Nisha Kapoor",
+    email: "nisha.kapoor@example.com",
+    phoneNumber: "+91 98765 12002",
+    subject: "Corporate team training",
+    message:
+      "Looking for a custom batch for 18 frontend engineers covering React, Tailwind, and design systems.",
+    status: "QUALIFIED",
+    source: "Contact page",
+    pageUrl: "/contact",
+    adminNotes: "Send enterprise demo proposal.",
+    user: null,
+    createdAt: "2026-05-09T14:20:00.000Z",
+    updatedAt: now,
+  },
+  {
+    id: 3,
+    fullName: "Arjun Sethi",
+    email: "arjun.sethi@example.com",
+    phoneNumber: "+91 98765 12003",
+    subject: "Coupon not applying",
+    message:
+      "Trying to enroll in API Architecture Bootcamp and want to know if NEXTJS1000 applies.",
+    status: "CONTACTED",
+    source: "Checkout",
+    pageUrl: "/checkout",
+    adminNotes: "Explained course-specific coupon scope.",
+    user: users[1],
+    createdAt: "2026-05-08T11:40:00.000Z",
+    updatedAt: now,
+  },
+  {
+    id: 4,
+    fullName: "Meera Iyer",
+    email: "meera.iyer@example.com",
+    phoneNumber: "+91 98765 12004",
+    subject: "Certificate verification",
+    message:
+      "Need details about final exam, certificate generation, and profile sharing after completion.",
+    status: "CLOSED",
+    source: "Certificates page",
+    pageUrl: "/certificates",
+    adminNotes: "Resolved with certificate flow documentation.",
+    user: users[2],
+    createdAt: "2026-05-07T10:05:00.000Z",
+    updatedAt: now,
+  },
+];
+
+const emailTemplates = [
+  {
+    id: 1,
+    templateName: "welcome_learner",
+    subject: "Welcome to Kasa LMS, {{firstName}}",
+    body: "<p>Hi {{firstName}}, your learning dashboard is ready. Start with your enrolled courses and track progress from one place.</p>",
+    createAt: "2026-05-01T09:00:00.000Z",
+    updatedAt: now,
+    deletedAt: null,
+  },
+  {
+    id: 2,
+    templateName: "purchase_confirmation",
+    subject: "Your Kasa LMS order {{orderId}} is confirmed",
+    body: "<p>Your course purchase is complete. Open {{courseTitle}} and continue learning from your dashboard.</p>",
+    createAt: "2026-05-02T09:00:00.000Z",
+    updatedAt: now,
+    deletedAt: null,
+  },
+  {
+    id: 3,
+    templateName: "certificate_issued",
+    subject: "Certificate issued for {{courseTitle}}",
+    body: "<p>Congratulations {{firstName}}. Your certificate is ready to view, download, and share from your profile.</p>",
+    createAt: "2026-05-03T09:00:00.000Z",
+    updatedAt: now,
+    deletedAt: null,
+  },
+  {
+    id: 4,
+    templateName: "live_class_reminder",
+    subject: "Live class starts soon: {{classTitle}}",
+    body: "<p>Your live class for {{courseTitle}} starts at {{startTime}}. Join from the classroom link in your dashboard.</p>",
+    createAt: "2026-05-04T09:00:00.000Z",
+    updatedAt: now,
+    deletedAt: null,
+  },
+];
+
+const engagementDashboard = {
+  summary: {
+    activeSchedulers: 2,
+    enabledRules: 3,
+    broadcastsSent: 5,
+    scheduledBroadcasts: 1,
+  },
+  jobs: [
+    {
+      id: 1,
+      name: "Daily learner nudge",
+      slug: "daily-learner-nudge",
+      description: "Send a gentle study reminder to active enrolled learners.",
+      status: "active",
+      triggerType: "cron",
+      cronExpression: "0 9 * * *",
+      timezone: "Asia/Kolkata",
+      eventKey: null,
+      actionType: "notification_broadcast",
+      actionPayload: {
+        title: "Your learning streak is waiting",
+        message: "Open your current course and complete one lesson today.",
+        audience: "enrolled_users",
+      },
+      conditions: { minProgress: 1 },
+      lastRunAt: "2026-05-10T03:30:00.000Z",
+      nextRunAt: "2026-05-11T03:30:00.000Z",
+      runCount: 24,
+      failureCount: 0,
+      createdAt: "2026-04-15T09:00:00.000Z",
+      updatedAt: now,
+    },
+    {
+      id: 2,
+      name: "Weekend course offer",
+      slug: "weekend-course-offer",
+      description: "Promote featured courses every Friday evening.",
+      status: "active",
+      triggerType: "cron",
+      cronExpression: "0 18 * * 5",
+      timezone: "Asia/Kolkata",
+      eventKey: null,
+      actionType: "notification_broadcast",
+      actionPayload: {
+        title: "Weekend learning offer",
+        message: "Use KASA25 on selected programs before Sunday night.",
+        audience: "all_users",
+      },
+      conditions: {},
+      lastRunAt: "2026-05-08T12:30:00.000Z",
+      nextRunAt: "2026-05-15T12:30:00.000Z",
+      runCount: 8,
+      failureCount: 0,
+      createdAt: "2026-04-18T09:00:00.000Z",
+      updatedAt: now,
+    },
+  ],
+  rules: [
+    {
+      id: 1,
+      eventKey: "course.enrolled",
+      label: "Course enrollment welcome",
+      description: "Welcome learners immediately after a successful purchase.",
+      isEnabled: true,
+      audience: "selected_users",
+      channels: ["in_app", "email"],
+      type: "success",
+      titleTemplate: "Welcome to {{courseTitle}}",
+      messageTemplate: "Your course is ready. Start with the first module today.",
+      hrefTemplate: "/course/{{courseSlug}}/learn",
+      imageUrl: "/assets/demo/course-nextjs.svg",
+      filters: null,
+      createdAt: "2026-04-12T09:00:00.000Z",
+      updatedAt: now,
+    },
+    {
+      id: 2,
+      eventKey: "certificate.issued",
+      label: "Certificate celebration",
+      description: "Notify learners when a certificate is generated.",
+      isEnabled: true,
+      audience: "selected_users",
+      channels: ["in_app", "email", "push"],
+      type: "achievement",
+      titleTemplate: "Certificate ready",
+      messageTemplate: "Congratulations. Your {{courseTitle}} certificate is ready to share.",
+      hrefTemplate: "/certificates",
+      imageUrl: "/assets/demo/course-ui.svg",
+      filters: null,
+      createdAt: "2026-04-13T09:00:00.000Z",
+      updatedAt: now,
+    },
+    {
+      id: 3,
+      eventKey: "class.reminder",
+      label: "Live class reminder",
+      description: "Remind learners before upcoming live sessions.",
+      isEnabled: true,
+      audience: "course_enrolled",
+      channels: ["in_app", "push"],
+      type: "info",
+      titleTemplate: "{{classTitle}} starts soon",
+      messageTemplate: "Join your live class from the classroom page.",
+      hrefTemplate: "/classes",
+      imageUrl: "/assets/demo/course-react-live.svg",
+      filters: { offsetMinutes: 60 },
+      createdAt: "2026-04-14T09:00:00.000Z",
+      updatedAt: now,
+    },
+  ],
+  broadcasts: [
+    {
+      id: 1,
+      title: "New Product Design Sprint is live",
+      message: "A 4-week faculty-led sprint is now open for enrollment.",
+      href: "/course/product-design-sprint",
+      imageUrl: "/assets/demo/course-product-design.svg",
+      type: "announcement",
+      audience: "all_users",
+      channels: ["in_app", "email"],
+      audienceFilters: null,
+      status: "sent",
+      scheduledAt: null,
+      sentAt: "2026-05-09T12:00:00.000Z",
+      recipientCount: 1260,
+      deliveredCount: 1238,
+      failureReason: null,
+      stats: {
+        totalRecipients: 1260,
+        notificationsCreated: 1260,
+        delivered: 1238,
+        failed: 22,
+        read: 842,
+        clicked: 214,
+        readRate: 68,
+        clickRate: 17,
+      },
+      createdAt: "2026-05-09T09:00:00.000Z",
+      updatedAt: now,
+    },
+    {
+      id: 2,
+      title: "Live React batch reminder",
+      message: "Seats close tomorrow for the May React cohort.",
+      href: "/course/live-react-career-accelerator",
+      imageUrl: "/assets/demo/course-react-live.svg",
+      type: "reminder",
+      audience: "course_enrolled",
+      channels: ["in_app", "push"],
+      audienceFilters: { courseId: 4 },
+      status: "scheduled",
+      scheduledAt: "2026-05-11T13:30:00.000Z",
+      sentAt: null,
+      recipientCount: 320,
+      deliveredCount: 0,
+      failureReason: null,
+      stats: {
+        totalRecipients: 320,
+        notificationsCreated: 0,
+        delivered: 0,
+        failed: 0,
+        read: 0,
+        clicked: 0,
+        readRate: 0,
+        clickRate: 0,
+      },
+      createdAt: "2026-05-10T09:00:00.000Z",
+      updatedAt: now,
+    },
+  ],
+};
+
+const mediaFiles = [
+  file(60, "Full-Stack Next.js cover", "/assets/demo/course-nextjs.svg"),
+  file(61, "API Architecture cover", "/assets/demo/course-api.svg"),
+  file(62, "UI Systems cover", "/assets/demo/course-ui.svg"),
+  file(63, "Live React cover", "/assets/demo/course-react-live.svg"),
+  file(64, "Data and AI cover", "/assets/demo/course-data-ai.svg"),
+  file(71, "Learner avatar placeholder", "/assets/guest-user.webp"),
+  file(81, "Learning article", "/assets/demo/article-learning.svg"),
+  file(82, "Static theme article", "/assets/demo/article-static-theme.svg"),
+  file(201, "Kasa light logo", "/assets/kasa-logo-light.png"),
+  file(202, "Kasa dark logo", "/assets/kasa-logo-dark.png"),
+];
+
 const countries = [
   { id: 1, name: "India", countryCode: "IN" },
 ];
@@ -938,6 +1313,7 @@ const certificates = [
     id: 1,
     certificateNumber: "KASA-2026-001",
     issuedAt: now,
+    emailedAt: now,
     file: file(91, "Certificate", "/assets/default-cover.jpg"),
     user: users[0],
     course: { id: 3, title: courses[2].title, slug: courses[2].slug },
@@ -950,11 +1326,86 @@ const courseCertificate = {
   id: 2,
   certificateNumber: "KASA-2026-002",
   issuedAt: now,
+  emailedAt: null,
   file: file(92, "Course Certificate", "/assets/default-cover.jpg"),
   user: users[0],
   course: { id: courses[0].id, title: courses[0].title, slug: courses[0].slug },
   createdAt: now,
   updatedAt: now,
+};
+
+const certificateRows = [
+  {
+    id: 1,
+    enrolledAt: "2026-04-01T09:00:00.000Z",
+    learner: users[0],
+    course: { id: courses[2].id, title: courses[2].title, slug: courses[2].slug },
+    progress: 100,
+    totalLectures: 6,
+    completedLectures: 6,
+    examRequired: true,
+    examPassed: true,
+    courseCompleted: true,
+    status: "issued",
+    actionHint: "Certificate is issued and ready to download.",
+    certificate: certificates[0],
+  },
+  {
+    id: 2,
+    enrolledAt: "2026-04-18T09:00:00.000Z",
+    learner: users[1],
+    course: { id: courses[0].id, title: courses[0].title, slug: courses[0].slug },
+    progress: 100,
+    totalLectures: 6,
+    completedLectures: 6,
+    examRequired: true,
+    examPassed: true,
+    courseCompleted: true,
+    status: "ready_to_generate",
+    actionHint: "Learner passed all requirements. Generate certificate.",
+    certificate: null,
+  },
+  {
+    id: 3,
+    enrolledAt: "2026-04-22T09:00:00.000Z",
+    learner: users[2],
+    course: { id: courses[0].id, title: courses[0].title, slug: courses[0].slug },
+    progress: 100,
+    totalLectures: 6,
+    completedLectures: 6,
+    examRequired: true,
+    examPassed: false,
+    courseCompleted: true,
+    status: "exam_pending",
+    actionHint: "Final exam must be passed before certificate generation.",
+    certificate: null,
+  },
+  {
+    id: 4,
+    enrolledAt: "2026-05-01T09:00:00.000Z",
+    learner: users[3],
+    course: { id: courses[5].id, title: courses[5].title, slug: courses[5].slug },
+    progress: 68,
+    totalLectures: 6,
+    completedLectures: 4,
+    examRequired: false,
+    examPassed: false,
+    courseCompleted: false,
+    status: "course_incomplete",
+    actionHint: "Learner needs to finish remaining lessons.",
+    certificate: null,
+  },
+];
+
+const adminCertificateDashboard = {
+  summary: {
+    enrolledLearners: certificateRows.length,
+    issuedCertificates: certificateRows.filter((row) => row.status === "issued").length,
+    readyToGenerate: certificateRows.filter((row) => row.status === "ready_to_generate").length,
+    examPending: certificateRows.filter((row) => row.status === "exam_pending").length,
+    courseIncomplete: certificateRows.filter((row) => row.status === "course_incomplete").length,
+  },
+  rows: certificateRows,
 };
 
 const examHistory = [
@@ -1137,6 +1588,123 @@ export async function staticApiRequest<T>(
       return ok({ user: users[0], accessToken: "static-token" }) as T;
     }
     if (path.includes("sign-out")) return ok({ message: "Signed out" }) as T;
+    if (path === "/courses") {
+      return ok({
+        ...courses[0],
+        id: 100,
+        title: (body as any)?.title || "New Static Demo Course",
+        slug: ((body as any)?.title || "new-static-demo-course")
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-|-$/g, ""),
+        isPublished: false,
+        isFeatured: false,
+        progress: { isCompleted: false, progress: 0, lastTime: 0 },
+        createdAt: now,
+        updatedAt: now,
+      }) as T;
+    }
+    if (path.startsWith("/courses/") && path.endsWith("/duplicate")) {
+      const source = byId(courses, parts[1]);
+      return ok({
+        ...source,
+        id: 101,
+        title: `${source.title} Copy`,
+        slug: `${source.slug}-copy`,
+        isPublished: false,
+        isFeatured: false,
+        createdAt: now,
+        updatedAt: now,
+      }) as T;
+    }
+    if (parts[0] === "courses" && parts[1]) {
+      return ok({ ...byId(courses, parts[1]), ...(body as object), updatedAt: now }) as T;
+    }
+    if (path === "/articles") {
+      return ok({
+        ...articles[0],
+        id: 100,
+        title: (body as any)?.title || "New Static Demo Article",
+        slug: (body as any)?.slug || "new-static-demo-article",
+        status: "draft",
+        isPublished: false,
+        isFeatured: false,
+        publishedAt: null,
+        createdAt: now,
+        updatedAt: now,
+      }) as T;
+    }
+    if (parts[0] === "articles" && parts[1]) {
+      return ok({ ...byId(articles, parts[1]), ...(body as object), updatedAt: now }) as T;
+    }
+    if (path === "/coupons") {
+      return ok({
+        ...coupons[0],
+        id: 100,
+        code: (body as any)?.code || "DEMO100",
+        status: CouponStatus.ACTIVE,
+        usedCount: 0,
+        createdAt: now,
+        updatedAt: now,
+      }) as T;
+    }
+    if (path === "/coupons/apply" || path === "/coupons/auto-apply") {
+      const cartTotal = Number((body as any)?.cartTotal || 0);
+      const discount = Math.min(Math.round(cartTotal * 0.15), 1500);
+      return ok({
+        couponId: coupons[0].id,
+        code: coupons[0].code,
+        discount,
+        finalAmount: Math.max(cartTotal - discount, 0),
+      }) as T;
+    }
+    if (path === "/coupons/auto-apply-bulk") {
+      const items = Array.isArray((body as any)?.courses) ? (body as any).courses : [];
+      return ok({
+        data: Object.fromEntries(
+          items.map((item: any) => {
+            const discount = Math.min(Math.round(Number(item.price || 0) * 0.15), 1500);
+            return [
+              item.id,
+              {
+                couponId: coupons[0].id,
+                code: coupons[0].code,
+                discount,
+                finalAmount: Math.max(Number(item.price || 0) - discount, 0),
+              },
+            ];
+          }),
+        ),
+      }) as T;
+    }
+    if (parts[0] === "coupons" && parts[1]) {
+      return ok({ ...byId(coupons, parts[1]), ...(body as object), updatedAt: now }) as T;
+    }
+    if (path === "/users") return ok({ ...users[0], id: 100, ...(body as object), createdAt: now, updatedAt: now }) as T;
+    if (path.startsWith("/users/update/") || path.startsWith("/users/update-profile/")) {
+      return ok({ ...byId(users, parts.at(-1) || "1"), ...(body as object), updatedAt: now }) as T;
+    }
+    if (path === "/categories" || path === "/tags" || path === "/email-templates") {
+      return ok({ id: 100, ...(body as object), createdAt: now, updatedAt: now, deletedAt: null }) as T;
+    }
+    if (path.startsWith("/engagement/broadcasts")) {
+      return ok({ ...engagementDashboard.broadcasts[0], ...(body as object), id: 100, updatedAt: now }) as T;
+    }
+    if (path.startsWith("/engagement/notification-rules")) {
+      return ok({ ...engagementDashboard.rules[0], ...(body as object), id: 100, updatedAt: now }) as T;
+    }
+    if (path.startsWith("/engagement/schedulers")) {
+      return ok({ ...engagementDashboard.jobs[0], ...(body as object), id: 100, updatedAt: now }) as T;
+    }
+    if (path.startsWith("/contact-leads/")) {
+      return ok({ ...byId(contactLeads, parts.at(-1) || "1"), ...(body as object), updatedAt: now }) as T;
+    }
+    if (path === "/uploads/init") {
+      return ok({ uploadId: 100, url: "/assets/default-cover.jpg", key: "static-demo-upload" }) as T;
+    }
+    if (path.startsWith("/uploads/confirm/") || path === "/uploads/file") {
+      return ok(file(100, "Static demo upload", "/assets/default-cover.jpg")) as T;
+    }
     if (path.includes("orders")) {
       return ok({
         orderId: orders[0].id,
@@ -1277,6 +1845,14 @@ export async function staticApiRequest<T>(
   if (path === "/categories") {
     return ok(queryString ? paginated(categories) : { data: categories }) as T;
   }
+  if (path === "/categories/by-type") {
+    const type = new URLSearchParams(queryString).get("type")?.toLowerCase();
+    return ok({
+      data: categories.filter((category) =>
+        type ? category.type?.toLowerCase() === type : true,
+      ),
+    }) as T;
+  }
   if (parts[0] === "categories" && parts[1]) return ok(byId(categories, parts[1])) as T;
   if (path === "/tags" || path === "/tags/") return ok({ data: tags }) as T;
   if (parts[0] === "tags" && parts[1]) return ok(byId(tags, parts[1])) as T;
@@ -1320,7 +1896,7 @@ export async function staticApiRequest<T>(
   if (path === "/certificates/my") return ok(certificates) as T;
   if (path.startsWith("/certificates/course/")) return ok(courseCertificate) as T;
   if (path === "/certificates/admin/dashboard") {
-    return ok({ totalIssued: certificates.length, certificates }) as T;
+    return ok(adminCertificateDashboard) as T;
   }
   if (path === "/course-exams/my-history") return ok(examHistory) as T;
   if (path === "/course-exams/admin-overview") {
@@ -1476,10 +2052,16 @@ export async function staticApiRequest<T>(
     return ok({ roles, permissions, stats: { roles: roles.length, permissions: permissions.length } }) as T;
   }
 
-  if (path === "/contact-leads") return ok([]) as T;
-  if (path === "/coupons") return ok({ data: [] }) as T;
-  if (path === "/email-templates") return ok(paginated([])) as T;
-  if (path === "/engagement/dashboard") return ok({ broadcasts: [], rules: [], jobs: [], stats: {} }) as T;
+  if (path === "/uploads") return ok(mediaFiles) as T;
+  if (path === "/contact-leads") return ok(contactLeads) as T;
+  if (path === "/coupons") return ok({ data: coupons }) as T;
+  if (parts[0] === "coupons" && parts[1]) return ok(byId(coupons, parts[1])) as T;
+  if (path === "/email-templates") return ok(paginated(emailTemplates)) as T;
+  if (parts[0] === "email-templates" && parts[1]) return ok(byId(emailTemplates, parts[1])) as T;
+  if (path === "/engagement/dashboard") return ok(engagementDashboard) as T;
+  if (path.startsWith("/engagement/broadcasts/") && path.endsWith("/stats")) {
+    return ok(engagementDashboard.broadcasts[0].stats) as T;
+  }
   if (path.startsWith("/user-progress/course/")) {
     return ok(Object.fromEntries(allLectures.map((lecture) => [lecture.id, lecture.progress]))) as T;
   }
